@@ -1,0 +1,94 @@
+<Class>
+    <Student>
+        <firstname>Ajeet</firstname>
+        <lastname>Ajeet</lastname>
+        <age>34</age>
+    </Student>
+     <Student>
+        <firstname>Ajeet</firstname>
+        <lastname>Ajeet</lastname>
+        <age>12</age>
+    </Student>
+</Class>
+
+
+
+curl --location 'http://localhost:9092/api/xml-validator' \
+--header 'Content-Type: application/xml' \
+--data '<Class>
+    <Student>
+        <firstname>Ajeet</firstname>
+        <lastname>Ajeet</lastname>
+        <age>34</age>
+        <city id="2">Gauspur</city>
+    </Student>
+     <Student>
+        <firstname>Ajeet</firstname>
+        <lastname>Ajeet</lastname>
+        <age>12</age>
+        <city id="2">Gauspur</city>
+    </Student>
+</Class>'
+
+
+.....
+<Class>
+    <Student>
+        <firstname>Ajeet</firstname>
+        <lastname>Ajeet</lastname>
+        <age>34</age>
+        <city id="2">Gauspur</city>
+    </Student>
+     <Student>
+        <firstname>Ajeet</firstname>
+        <lastname>Ajeet</lastname>
+        <age>12</age>
+        <city id="2">Gauspur</city>
+    </Student>
+</Class>
+
+
+
+
+
+
+You
+10:39 PM
+hi
+Hover over a message to pin it
+keep
+Ajeet Kushwaha
+11:31 PM
+curl --location 'http://localhost:9092/api/xml-validator' \
+--header 'Content-Type: application/xml' \
+--data '<Class>
+    <Student>
+        <firstname>Ajeet</firstname>
+        <lastname>Ajeet</lastname>
+        <age>34</age>
+        <city id="2">Gauspur</city>
+    </Student>
+     <Student>
+        <firstname>Ajeet</firstname>
+        <lastname>Ajeet</lastname>
+        <age>12</age>
+        <city id="2">Gauspur</city>
+    </Student>
+</Class>'
+Ajeet Kushwaha
+11:59 PM
+curl --location 'http://localhost:9092/api/json-xml-validator' \
+--header 'Content-Type: application/json' \
+--data '{
+    "Class": {
+        "Student": {
+            "firstname": "Ajeet",
+            "lastname": "Kushwaha",
+            "age": 23
+        }
+    }
+}'
+Ajeet Kushwaha
+12:06 AM
+http://localhost:8161/index.html
+pnn-vqdt-bfd
