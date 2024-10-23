@@ -1,0 +1,38 @@
+https://github.com/apache/camel-quarkus-examples
+
+https://cognizant.udemy.com/course/quarkus-starting-with-quarkus/
+
+https://quarkus.io/about/
+
+1 : Quarkus is a Kubernetes-native Java framework tailored(अनुरूप) for GraalVM and HotSpot, crafted from best-of-breed Java libraries and standards. 
+	The goal is to make Java the leading platform in Kubernetes and serverless environments while offering developers a framework to address a
+	wider range of distributed application architectures.
+	
+	OR Quarkus is a Kubernetes-native Java framework tailored(अनुरूप) specifically for cloud-native applications, microservices and serverless 
+	architectures. It aims to optimize java for low memory usage and fast startup times, which are critical in modern cloud environments, especially for
+	containerized applications.
+	
+	Native Images: https://www.baeldung.com/spring-native-intro
+	A native image is a technology to build Java code to a standalone executable.This executable includes the application classes,
+	classes from its dependencies, runtime library classes, and statically linked native code from JDK. The JVM is packaged into the native image,
+	so there’s no need for any Java Runtime Environment at the target system, but the build artifact is platform-dependent. So we’ll need one build
+	per supported target system, which will be easier when we use container technologies like Docker, where we can build a container as a target
+	system that can be deployed to any Docker runtime.
+	
+2 : Quarkus applications deploying on container orchestrators such as Kubernetes. 
+	Quarkus build-time processing also generates the Kubernetes metadata, so your application is ready to be deployed on Kubernetes.
+	Runtime capabilities such as health checks and metrics are exposed out of the box. Quarkus collects all the required metadata at build time to
+	create the Kubernetes deployment descriptor and produce a container image. A single command line can deploy your application onto your 
+	Kubernetes cluster.
+	
+	
+BOM : BOM stands for "Bill of Materials" - it is a pom.xml whose main purpose is to manage the versions of artifacts so that end users importing 
+	the BOM in their projects do not need to care which particular versions of the artifacts are supposed to work together. In other words, having
+	a BOM imported in the <depependencyManagement> section of your pom.xml allows you to avoid specifying versions for the dependencies managed 
+	by the given BOM.	
+
+Camel Quarkus BOM : As long as you do not plan to use any dependencies beyond those from Quarkus and Camel Quarkus, we should use 
+					org.apache.camel.quarkus:camel-quarkus-bom which manages all supported Camel artifacts and imports
+					
+Defining Camel routes	:	Camel Quarkus supports the Java DSL language to define Camel Routes.
+					

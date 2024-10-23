@@ -1,0 +1,239 @@
+Camel Trainig :
+1 : Video  
+>CamelContext:
+		it is holding of all operations and how many routes we writing and what components utilized it, what will be registry it's used (allow
+		), contains endpoint ,commbined all and make it context.
+		Note : when we build , it's a jar and when run it , it's a context(camel)
+>InOnly     : One way message - Jms messaging is often one way.
+>InOut      : A request response message : Http based transport is often InOut
+>Header     : it passed through third party/endpoint/otherRoute but property hold into exchange and not passed to exchange/endpoint.
+>Enriching  :
+>Component  : FIle, JMS ,activeMq ,Direct
+>Endpoint   :
+>Processor  :
+>Producer   :
+>Consumer   : 
+		Event-driven consumer : when any event occured like files come into source , message push to queue consumer responde to consume meesgae.
+		It is also known as asynchronous receiver
+		Polling Consumer : Also known as synchronous receiver in EIP. it's polls the messase for a particular time interval. 
+>Data Format: camel-bindy, camel-jaxson
+
+2 : video 
+			Installation : jdk, maven, 
+			sampleProject: create maven project , write a route to pic file using file component .
+			EIP 		 :
+				Content-Based-Router : evry when condition/block will be end with endchoice() and choice block closed in last with end() tag;
+				Spiltter             : Induvisully internal exchange
+				Aggregator           :
+				Multicast            :
+			Predicate	 : choice Xpath, when 
+			 
+Junit test case : https://dzone.com/articles/camel-route-mock-testing
+				https://www.youtube.com/watch?v=3XA1i4eX_F8
+				https://www.youtube.com/watch?v=NfQL43mGT6s
+
+3 : Video  	: 
+			Component : file, http, jms, activeMq, ftp, sftp ,timer:quartz schedueler , cxf(soap service)
+			
+				Direct    : with in same application running on same jvm               synchronous
+				Direct-vm : connection betwwen two application within same camel context or another camel context ,and run on the same jvm   synchronous
+				Seda      : Send exchange messgae on one thread and consume message on antohter thread using seda camel internal queue.			
+				Bean      :(Camel component) bean class/component having class and methosd and exchange, also having n number of method.
+							.bean(SampleBean.class,"sampleMethod")   , SampleBean=class && sampleMethod=method in SampleBean class.
+							OR .bean("beanName")             >.bean("SampleBean")
+							OR .bean("beanName","MethodName")> .bean("SampleBean","sampleMethod")					
+				LOG		  :
+				file      :charset ,utf-8  (55 minut) , details about file option and it's uses.
+			
+			>Send mail example (1hr20min)
+			
+4 : Video	:
+			Simple Expression Language : (16Min) POC in code
+			Throttler(EIP) : it controll the sending message(processing activity) to a endpoint with given option. EXMple  :
+				from("seda:a")
+					.throttle(3).timePeriodMillis(10000)
+					.to("endpointName")
+				Means throttle will send only 3 message(or handle only three request )within 10 second. next 4rth message/request accept after 10 
+				second.
+			
+			LoadBalancer(EIP) : It's manage the load on server for incomming hits
+				        More option to read : 
+						weighted 	:
+						from("direct:start")
+							.loadBalance().weighted(false, "4,2,1") >The distribution ratio is 7 = 4 + 2 + 1. 
+							This means that for every seventh message then 4 goes to the first, 2 for the second, and 1 for the last.
+						
+						roundRobin	: We want to load balance between three endpoints in round-robin mode.
+						from("direct:start")
+							.loadBalance().roundRobin()
+								.to("seda:x")
+								.to("seda:y")
+								.to("seda:z")
+			
+			FTP Protocl 	: provide access to remote file systems over the ftp and sftp protocol.
+							ftp://[username@]hostanem[:port]/directoryname[?option]
+							sftp://[username@]hostanem[:port]/directoryname[?option]
+							ftps://[username@]hostanem[:port]/directoryname[?option]
+							ftp and sftp have most of same property/option like file component.
+							
+			JMS (1hrs12min)		:	
+									
+								Option	:
+								CLIENT_ACKNOWLEGE : after pushing a message into queuue/topic , consumer app consume message and give the acknowledge
+								of succesfully proccess message or not .read and video for more
+								
+								Example :from("activemq:queue:in")
+											.to("bean:validateOrder")
+											.to(ExchangePattern.InOnly,"activemq:topic:order")
+											.to("bean:handleOrder")
+								
+			Timer	:(1hrs26mins):		It starts at that pont of time and take exact period from that point of time
+			
+			Quartz	:(1hrs32mins)   create crone schedueler using cron maker sitw , it start at given time period .
+										
+									
+5 : Video	:
+			CXF component : Camel provide a CXF component by using this we are able to use CXF web services framework feature that support many 
+				sebservices standared like JAX-WS(Java API for XML web service).
+				A webServices is nothing but the implementation of a specific bussiness function and as an API on the network 
+				
+				http request>application> app send some response(full application response)  			synchronous call
+				http request>application> app send some response(Acknowledgment application response)   Asynchronous call
+				http method : GET ,POST, Put, PATCH
+				
+				WSDL :
+					Contract-first-approch : most use 
+					Code-first-approch
+				SOAP configuration  :
+			
+			Exception Handling : https://www.geeksforgeeks.org/error-handling-in-apache-camel-with-java/
+								https://docs.redhat.com/en/documentation/red_hat_jboss_fuse/6.2/html/apache_camel_development_guide/basicprinciples-exceptionhandling
+				Error Handling : error handling does not aply everwhere ,it's only aplies within the lifecycly of an exchange.
+					It's major disadvantage is that onle one exception block will be defined , there may be more diff diff exception in one large
+					application ,SO it is imposibble to define custome excpetion log for every particular exception .
+					Type	: DefaultErrorHandler
+							  DeadLetterChannel
+							  TransactionErrorHandler
+							  NoErrorHandler
+							  LoggingErrorHandler
+					Scope	: a context scope and a route scope.
+					OR
+					The ‘error handler’ configuration allows you to define the global error-handling strategy for your Camel context. It affects 
+					how unhandled exceptions are handled.
+					OR :
+					The errorHandler() clause provides similar features to the onException clause, except that this mechanism is not able to 
+					discriminate between different exception types. The errorHandler() clause is the original exception handling mechanism 
+					provided by Apache Camel and was available before the onException clause was implemented.
+					The errorHandler() clause is defined in a RouteBuilder class and applies to all of the routes in that RouteBuilder class. It
+					is triggered whenever an exception of any kind occurs in one of the applicable routes.For example, to define an error handler
+					that routes all failed exchanges to the ActiveMQ deadLetter queue, you can define a RouteBuilder as follows:
+					
+					public class MyRouteBuilder extends RouteBuilder {
+						public void configure() {
+								errorHandler(deadLetterChannel("activemq:deadLetter"));
+
+								// The preceding error handler applies 
+								// to all of the following routes:
+								from("activemq:orderQueue")
+								  .to("pop3://fulfillment@acme.com");
+								from("file:src/data?noop=true")
+								  .to("file:target/messages");
+								// ...
+							}
+						}
+					
+					Redirection to the dead letter channel will not occur, however, until all attempts at redelivery have been exhausted.
+			
+				onException	:
+					Exception Policy : 
+						Exception poliecies are used to intercept and handle specific exception in a particular way.
+						In camel , exception poliecies are specified with the onException method in the route.
+					Handled(true)	: Means Exception is caught and log the message and break the route.
+						WHy the Exchange.getException() returns 'null' : when an exception marked onException to handle(true) the exception , then 
+						camel moves the exception from the Exchange to the "Exchange.EXCEPTION_CAUGHT" property. So calling Exchange.getException 
+						will return	null.
+						Properties on the Exchange related to error handling :
+							Exchange.EXCEPTION_CAUGHT, Exchange.FAILURE_ENDPOINT,Exchange.ERRORHANDLER_HANDLED,Exchange.FAILURE_HANDLED.
+									
+					Continued(true) (IGNORING eXCEPTION )	:
+						Handling an exception means that camel will break out of the route.
+						But there are times when all we want is to catch the exception and continue routing.
+						This is possible to do in camel using 'continued'.
+						we have to do is to use continued(true) instead of handled(true).
+							example	:
+								onException(JmsException.class).handled(true).proccess(new GenerateFailureResponse));
+								onException(ValidationException.class).continued(true).proccess(new GenerateFailureResponse));
+								
+				doTry, doCatch ...doFinally block : 
+				
+				DIFF : The errorHandler is used to handle any uncaught Exception that gets thrown during the routing and processing of a message.
+					Conversely, onException is used to handle specific Exception types when they are thrown. Check out this article to see how to 
+					use onException
+				
+6	Video	:	
+			JMS Component : JMS is a midium or channle between two application to integrate these app.
+			 Jms is an API to send mesage into ActiveMQ, the main middium channel is ActiveMQ which provide by apache
+			 
+			 DIFF b/w jms and activeMQ  : https://www.openlogic.com/blog/what-apache-activemq
+			 JMS is a specification. JMS has three main parts to it. 
+			 1 :	The first is the producer, which is nothing more than a bean that submits a "message" to a JMS broker (the system that 
+					manages messages between producers and consumers).
+			 2 :	In this case, ActiveMQ is the broker. Once the broker receives a message, the consumer ..
+			 3 :    the consumer or Message-Driven Bean (MDB), processes the message.
+			 
+			 AcitveMQ : Apache ActiveMQ brokers are implementations of the Java Messaging Service (JMS),JMS is a Java specification which allows
+						applications to send data back and forth between one another in an easy and standard way.
+			Difference Between JMS and ActiveMQ : ActiveMQ is a JMS provider. A JMS provider forms the software framework for facilitating the 
+					use of JMS concepts inside an application. A single node of ActiveMQ which allows clients to connect to it and use these
+					messaging concepts is called an “ActiveMQ Broker.”		
+					
+					So, ActiveMQ is a message broker that implements JMS. Using ActiveMQ is important for many businesses — especially enterprises.
+					
+			
+			Diff b/w Parent dependency(tag) and normal dependency :  parent dependency facilitating to us to reuse dependencies from othe app.	 	
+			
+7	Video	:
+			Fuse and OSGI	: Fuse is a framework where we able to install/deploye our application with the help of OSGI container.
+			OSGI like a interface. (BY wamsi)
+			
+			Bundle :  A jar file is known as a bundle in OSGI terms.
+			Circuit Breker :   need to again learn.
+			
+			A story of lost message********* : Suppose app A consume a message from queue and do some process and push into another endpoint,
+				But if app A is unable push message to another endpoint due to some exception, then what will happen to the message, if message
+				will be important.
+			
+				Application A (from(jms:queue:A))	--> Processing the Exchange A --> send to Destination B (SQL) --> THrowing exception.
+			
+				Application A (from(jms:queue:A?acknowledgementModeName=AUTO_ACKNOWLEDGE))	--> Processing the Exchange A --> send to Destination
+				B (SQL) --> THrowing exception.    ::	AUTO_ACKNOWLEDGE -->once recived massge by application from queeue ,it will deleted message 
+				from queue , this is default one . 
+				
+				If message contains important details like payment details then it's a problem when message failure. then we use CLIENT_ACKNOWLEDGE.
+				Application A (from(jms:queue:A?acknowledgementModeName=CLIENT_ACKNOWLEDGE))	--> Processing the Exchange A --> send to Destination
+				B (SQL) --> acknowledge mesage back to jms .
+					IF queue pushed succesfully push to destination , CLIENT_ACKNOWLEDGE option acknowledge to JMS(activeMq) server that is message
+					has been send to succesfully to endpoint.
+					
+				IF message not pushed succesfully to endpoint then it's throw exception then :
+				Application A (from(jms:queue:A?acknowledgementModeName=CLIENT_ACKNOWLEDGE))	--> Processing the Exchange A --> send to Destination
+				B (SQL) --> throw exception .->Handled(true) ->acknowledge message back to jms . : Means if application throw exception between
+					process message from source to endpoint and we handled this excpetion as Handled(true) then also in this case application 
+					acknowledge back to the JMS server.
+					
+					throw exception (application got terminated) -->not sending acknowledge message back to jms . :
+					
+					
+				Application A (from(jms:queue:A?acknowledgementModeName=SESSION_TRANSACTED, payment 500-> person B)) --> Processing the Exchange A -->
+				send to Destination B (to(SQL))-(person B) -> destination C (to(http)) -->acknowledge message back to jms . 
+					If the destination C got failure , whatever destination B has done, it will do revert activity.
+			
+			AutoStartUp and StartupOrder :
+			
+			Camel maven configuration and buidl (google) :
+			OSGI orchitecture	:
+			Fabric8()
+			
+			
+
+Not Understanding : circuit breaker, 			

@@ -1,0 +1,56 @@
+https://maddevs.io/blog/spring-boot-vs-quarkus/
+https://dev.to/nikhilxd/spring-boot-vs-quarkus-vs-micronaut-the-best-java-frameworks-for-modern-development-5ccd#:~:text=Quarkus%3A%20Outperforms%20Spring%20Boot%20in,due%20to%20its%20older%20architecture.
+
+Camel Qurkuas : https://developers.redhat.com/articles/2022/03/15/choose-best-camel-your-integration-ride-part-2#
+
+Quarkus: Outperforms Spring Boot in terms of startup time and memory consumption, making it ideal for cloud environments.
+	OR :
+Quarkus is another framework with a similar approach as Spring Boot, but with an additional promise of delivering smaller artifacts with fast 
+boot time, better resource utilization, and efficiency.
+
+GrallVM	:
+The GrallVM just-in-time compiler is used to accelerate performance of any Java and JVM-based application without the need for code changes.
+
+
+Spring Boot :	it is an extension of the Spring framework designed to simplify the development of Spring applications. It has revolutionized the
+	way developers build and deploy Java applications by offering a range of powerful features:
+Auto-Configuration		: Automatically configures your application based on the dependencies you add, reducing the need for extensive manual setup.
+Standalone Applications	: With embedded servers like Tomcat or Jetty, you can run Spring Boot applications independently without the need for a
+	separate web server.
+Production-Ready Features : Built-in metrics, health checks, and externalized configuration make it easy to deploy and manage applications in 
+	production.
+Microservices		: Its lightweight and modular nature makes it perfect for building microservices architectures.
+
+Quarkus	:	
+Quarkus is a Kubernetes-native Java framework optimized for GraalVM and OpenJDK HotSpot, offering unparalleled performance and efficiency.
+Kubernetes-Native: Seamlessly integrates with Kubernetes, making it ideal for cloud-native applications.
+Fast Startup and Low Memory Footprint: Optimized for containerized environments with exceptionally fast boot times and minimal resource consumption.
+Developer Productivity: Features like live reload enhance the development experience.
+Reactive Programming Support: Built-in support for reactive programming with Vert.x for building highly scalable and responsive applications.
+
+Spring Boot v/s Quarkus
+
+	1 : Ease of Use	:
+		Spring Boot	: Simplifies development with auto-configuration and starter dependencies, making it easy to get started.
+		Quarkus		: Also simplifies development with developer-friendly features like live reload but requires some learning curve for Kubernetes
+			and GraalVM optimization.
+	2 : Microservices Support	:
+		Spring Boot	: Designed with microservices in mind, providing a robust ecosystem for building scalable services.
+		Quarkus		: Excellent for microservices, especially in cloud-native environments with Kubernetes.
+	3 : Microservices Support	:
+		Spring Boot: Designed with microservices in mind, providing a robust ecosystem for building scalable services.
+		Quarkus: Excellent for microservices, especially in cloud-native environments with Kubernetes.
+	4 :	Performance	:
+		Spring Boot: Performance is generally sufficient for most enterprise applications.
+		Quarkus: Outperforms Spring Boot in terms of startup time and memory consumption, making it ideal for cloud environments.
+		
+Why Spring Boot is Mostly Used	:	
+Simplicity and Productivity	: Spring Boot’s auto-configuration and starter dependencies reduce boilerplate code and configuration effort, allowing
+					developers to focus on writing business logic.
+Microservices Architecture	: Its lightweight and modular nature makes it ideal for building microservices, which are increasingly popular 
+					in modern application development.
+Comprehensive Ecosystem	: The integration with the larger Spring ecosystem (Spring Data, Spring Security, etc.) provides a one-stop solution
+					for various development needs.
+Active Community and Support	: A large community and robust support system make it easier to find resources and get help when needed.
+Production-Ready	: Features like embedded servers, health checks, metrics, and externalized configuration make it easy to deploy and
+					maintain Spring Boot applications in production environments.		

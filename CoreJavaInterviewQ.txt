@@ -1,0 +1,98 @@
+1 	: 	Diff between instance variables and local variables.
+			A local variable:
+				>is declared inside a method/constructor or within a block (enclosed in braces)
+				>must be initialized before use. Otherwise it won't compile.
+			An instance variable:
+				>is declared inside a class.
+				>initialization is not compulsory: if omitted, it contains the default value (0, 0.0, false, null, etc.)	
+				
+2	:	Restrictions on static blocks and static methods  
+			static methods : Static methods belong to the class and they will be loaded into the memory along with the class, you can invoke them 
+				without creating an object.(using the class name as reference).
+			
+			static block : Whereas a static block is a block of code with a static keyword. In general, these are used to initialize the static
+				members. JVM executes static blocks before the main method at the time of class loading.
+			
+			Restrictions applied to Java static methods : 
+				> A static method in Java is a method that is part of a class rather than an instance of that class.
+				> Every instance of a class has access to the method.
+				> Static methods have access to class variables (static variables) without using the class’s object (instance).
+				> Only static data may be accessed by a static method. It is unable to access data that is not static (instance variables).
+				> In both static and non-static methods, static methods can be accessed directly.
+				
+Functional Programming : https://benestudio.co/functional-programming-java-examples/
+					To put it simply, functional programming is the process of building software by composing pure functions(a function or
+					a block of code that always returns the same result if the same arguments are passed).
+					
+					onward java 7 , java is an impreative programming language , difficult to implement decalative programming.
+					But in java 8 , it's include Lamabda expression, stream API, and functional interface to iplement functional programming.
+					
+					Imperative programming basically refers to how you do something while the declarative programming approach is what to do.
+					Imperative programming approach :
+					String[] stationery = {"Pen","Pencil","Book","Eraser"};
+					boolean found = false;
+					for(String item : stationery) { 
+						if(item.equals("Pencil")) { 
+							found = true; break; 
+						}
+					 }				 
+					System.out.println("Found Pencil?:" + found);
+					This approach is a low level where we are telling the code how to do what we want, we initialize a variable found, we loop 
+					through a list of stationery items and if we find the pencil, we set found to true and break out of the loop. Then we finally
+					print the result. This approach is pretty noisy. There should be a better way. 
+					 
+					Declarative programming approach : 
+					 System.out.println("Found pencil?:" + stationery.contains("Pencil"));
+					 The contains() method is a declarative style of programming that does all the work under the hood without us knowing exactly 
+					 what is going on. We just tell the code what we want it to do and don’t worry about how it’s done. This makes the code simple
+					 and takes out the problem of creating unneeded variables.
+
+Functional programming in Java 8 : Java is an imperative programming language, and before Java 7, It was difficult to implement functional 
+					programming techniques in Java. This changed with the introduction of multiple functional programming API’s in Java 8. Java 8 
+					came with new additions like lambdas, streams, and functional interfaces which made for the possible implementation of 
+					functional programming techniques in Java and the implementation of the declarative style of programming in Java.
+					Example : https://benestudio.co/functional-programming-java-examples/
+
+Spring Boot
+			Spring Boot is a microservice-based framework and making a production-ready application in it takes very little time. Following are 
+			some of the features of Spring Boot:
+			
+			Following are some of the features of Spring Boot:
+			It allows for avoiding heavy configuration of XML which is present in the spring.
+			It provides easy maintenance and creation of REST endpoints.
+			It includes embedded Tomcat-server.
+			Deployment is very easy, war and jar files can be easily deployed in the Tomcat server.
+					
+REST API Security : https://www.baeldung.com/spring-boot-api-key-secret
+					REST APIs are stateless. Thus, they shouldn’t use sessions or cookies. Instead, these should be secure using Basic authentication,
+					API Keys, JWT, or OAuth2-based tokens.
+					
+					Spring Security	 :Spring Security provides various mechanisms to secure our REST APIs. One of them is API keys. An API key is a 
+					token that a client provides when invoking API calls.
+					
+						1 : Basic authentication (in camel)	:
+							Basic authentication is a simple authentication scheme. The client sends HTTP requests with the Authorization header
+							that contains the word Basic followed by a space and a Base64-encoded string username:password. Basic authentication
+							is only considered secure with other security mechanisms such as HTTPS/SSL.
+							
+						2 : API Keys	:
+							Some REST APIs use API keys for authentication. An API key is a token that identifies the API client to 
+							the API without referencing an actual user. The token can be sent in the query string or as a request header. Like 
+							Basic authentication, it’s possible to hide the key using SSL. In this tutorial, we focus on implementing API Keys
+							authentication using Spring Security.
+							https://www.geeksforgeeks.org/securing-spring-boot-api-with-api-key-and-secret/
+							
+						3 : OAuth2	:
+							OAuth2 is the de facto standard for REST APIs security. It’s an open authentication and authorization standard that
+							allows resource owners to give clients delegated access to private data via an access token.
+
+
+
+Have one emp class and two employee emp1 and emp2 , how you comapre emp equality.
+		By using : 
+		equals()	:	(method of the Object class,The two objects will be equal if they share the same memory address. )
+					public boolean equals(Object obj)
+					obj1.equals(obj2) 
+					
+		hashCode()	:	hash code is a 32-bit signed integer value. It is a unique id provided by JVM to Java object. Each Java object is 
+				associated with the hash code. The hash code is managed by a hash-based data structure, such as HashTable, HashSet, etc.

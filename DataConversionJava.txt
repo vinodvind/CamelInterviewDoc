@@ -1,0 +1,55 @@
+1 :JSON TO CSV
+@Component
+public class JsonToCsvRoute extends RouteBuilder {
+    @Override
+    public void configure() throws Exception {
+        DataFormat bind = new BindyCsvDataFormat(User.class);
+        JacksonDataFormat jacksonDataFormat = new JacksonDataFormat(User.class);
+        jacksonDataFormat.useList();
+        jacksonDataFormat.setUnmarshalType(User.class);
+
+
+        // START CREATE JSON TO CSV ✅
+        //from("file:work?fileName=input.json")
+        from("jetty:http://localhost:9000/api/jsontocsv?httpMethodRestrict=POST")
+                .unmarshal(jacksonDataFormat)
+                .marshal().bindy(BindyType.Csv,User.class)
+                .setHeader("CamelFileName", simple("output_${date:now:yyyy-MM-dd-HH-mm-ss}.csv"))
+                .to("file:work/csv")
+                .setBody(simple("{isSuccess:true, message:Successfully created CSV}"))
+                .log("JavaDSL_JsonToCsv_001 :: Successfully created CSV");
+        // END CREATE JSON TO CSV
+		
+	User.class :
+		@CsvRecord(separator = ",", skipFirstLine = true, generateHeaderColumns = true)
+public class User {
+    @DataField(pos = 1, columnName = "userId")
+    private int userId;
+    @DataField(pos = 2, columnName = "id")
+    private int id;
+    @DataField(pos = 3, columnName = "todo")
+    private String todo;
+    //@DataField(pos = 4, columnName = "completed")
+    // private Boolean completed;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
+    }
+}
+
+2 : XML to XML conversion using XLST
