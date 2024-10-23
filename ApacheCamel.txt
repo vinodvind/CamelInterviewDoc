@@ -1,0 +1,313 @@
+
+Apache camel :	It is open source java integration framwork and lightweight routing engine which is allow us to write routing rules to route messages
+				from spesific source to destination and integrate diff applications with minimal configuration.It route any type of messages.
+			   
+			   OR At the core of the Camel framework is a routing engine. It allows us to define routing rules, decide from which sources to accept 
+			   messages, and determine how to process and send those messages to other destinations. Camel uses an integration language that allows
+			   us to define complex routing rules, akin to business processes.
+
+			   
+Fuse/ESB	 :	Fuse is a enterprise service bus which aims to simplyfy problems of integration by becoming a HUB that sits inthe middile of all 
+				applications and act as an information highway adding multiple applications to communicate each other.
+				Facilitaes message routing between applications.
+My Profile	 :	
+
+Component	 :	To allow camel to connect to an endpoint and talks with other system to send or receive message. A component is simply like a plug 
+				that allow us to connect to a exteranl system.
+				EX :JMS component allows to talks with JMS broker(ActiveMQ).JDBC component talks with JDBC SQL server.
+				
+				Component		Purpose												Endpoint URL
+				HTTP			for creating or consuming websites     				http:
+				FIle			Reading and writing files							file:
+				JMS				For reading and writing to messaging queue			jms:
+				Direct			To joining camel route together						direct:
+				Direct-VM
+				Ftp 
+				ActiveMq,quartz, timer,jetty,
+				XSLT ,sql, jdbc ,Jolt,
+				
+
+Endpoint	 :	In camel an endpoint nothing but a channel by which camel send or receive a message through component . As example at the start of 
+				a route camel receive a message from an endpoint , then the message might be processed in some way perhaps by an EIP before being
+				sent to another destination endpoint.
+				
+EIP 		 :	EIP stands for enterprise integration pattarn which is used to process message according to pattarn. 
+				EIP 								Useses
+				Splitter							split a message into multiple parts.
+				Aggregator							Combine several messages into one message
+				Log									Write a simple log message
+				Marshal								Converts an object into a text or binary format.
+				From								Receive message from an endpoint
+				To 									Send a message to an endpoint
+				Multicast
+				Reciepient list(Dynamic endpoint)
+				Wiretap
+				setProperty
+				Content-Based Router
+				Message Filter
+
+Predicate : Xpath ,when, choice
+
+Reciepient list(Dynamic endpoint) :	It allows camel to route messages to number of dynamically specified endpoints/receipients (using header).
+				A : Sending to multiple receipient in parrallel :	<route>
+																		<from uri="direct:a"/>
+																		<recipientList parrallelProcessing="true"><header>myHeader</header>
+																		</recipientList>
+																	</route>
+				B : Stop continuing in case off one receipient failed :	The receipient list support stopOnException, we use it to stop sending message
+					to any further receipients in case any receipient failed.	<route>
+																					<From/>
+																						<recipientList stopOnException="true"/>
+																				</route>
+				C : Ignore invalid endpoints : We can use it to skip endpoints which are invalid.
+																				<route>
+																					<From/>
+																						<recipientList ignoreInvalidEndpoint="true"/>
+																				</route>
+								1 : <header headerName="pathfromcfg">{{path1}}</header>   (path1 define in cfg file , path1 ="activemq:queue:foo;activemq:topic:hello ; log:bar")
+								<receipientList delimiter=";"><header>pathfromcfg</header></receipientList>
+								
+								2 : <route>
+										<From/>
+											<to uri=ftp:user@ip/
+											path>
+											<to uri=ftp:user@ip/path2>
+									</route>
+																			
+				
+Multicast	 :	Multicast is a camel EIP pattarn to route a same message to multiple endpoints or destination which define in camel route and 
+				process it in differents way according required process. Multicasting can be done in sequentially in the same thread or using
+				parrallel processing.
+				Multicast does not support ignoreInvalidEndpoint while receipientList does.
+										<route>
+											<From/>
+											<multicast>
+												<to uri="direct:a">
+												<to uri="direct:b">
+												<to uri="direct:c">
+												<to uri="direct:d">
+											</multicast>
+										</route>
+				Camel multicast pattern route a message to a number of endpoints at the same time. Multicast is similar to receipient list , the 
+				main diff is , in case of multicast it is already known this is static and fix where as in case of receipientlist
+				it is dynamic. 
+Splittor	:	The Splitter from the EIP 
+ allows the application split a message into a number of pieces and process them individually.
+				SPLIT AGGREGATE REQUEST/REPLY SAMPLE: This sample shows how you can split an Exchange, process each splitted message, aggregate
+				and return a combined response to the original caller using request/reply. The route below illustrates this and how the split
+				supports a aggregationStrategy to hold the in progress processed messages:
+				Example : from doc
+				
+Aggregator	:   The Aggregator from the EIP patterns allows your application to combine a number of messages together into a single message.
+				A correlation Expression is used to determine the messages which should be aggregated together.
+				An AggregationStrategy is used to combine all the message exchanges for a single correlation key into a single message exchange.
+
+WireTap EIP :	it copy the message and send it to a different endpoint without altering the existing flow. 	
+				https://www.javacodegeeks.com/2015/05/apache-camel-wire-tap-examples.html   **********
+				If you want to monitor, debug, troubleshoot messages that are flowing through the route without the bother of permanently consuming 
+				the message off the channel, then you need to use a wire tap.
+
+SEDA 		:	: https://access.redhat.com/documentation/en-us/red_hat_amq/6.3/html/fault_tolerant_messaging/fmqmasterslavejdbc
+				Seda is a component allows us to join routes togather using a simple queue. In camel route when a message is sent to a SEDA endpoint
+				it is stored in a basic in-memory queue and controle is return back to the calling route immidiatly, then independently a seda  
+				consumer piks up the messgae from the queue and processing it.
+					SEDA dows this by creating it's own buffer which is used to store the incoming messages.Out of the box , SEDA creates a pool of
+					threads to process incoming message, meaning that several messages can be processd at once making it potentially more performant.
+				Seda component in apache camel is very similar to the direct component but in a asynchronous manner.
+				
+
+Direct-VM	: D-VM is a component,allows endpoints to be accessed from different camel context as long as they are running inthe same jvm.
+			   This component allows also to connect routes deployed in different bundles even if they are running in different camel context,the camel
+			   routes will use the same thread.
+			   Also this endpoint can be used to connect existing routes in the same camel context.
+			
+			Bundle1 :
+			<camel-contaxt id="cc1" >
+				<route id="firstroute">
+					<from id="" uri="timer:foo?period=1s"/><log message=""/>
+					<to uri="direct-vm:directvm1"/><log message=""/>
+				</route>
+			</camel-context>
+			Bundle2 :
+			<camel-contaxt id="cc2" >
+				<route id="2ndroute">
+					<from id="" uri="direct-vm:directvm1"/><log message=""/>
+					<setBody><simple>hi camel</simple></setBody>
+				</route>
+			</camel-context>
+			
+			Option : 
+				Block/false/  : If sending a message to a direct endpoint which has no active cnsumer then we can tell the producer to block and 
+								wait for the consumer to become active.
+				Timeout/300000/ : the timeout value to use if block is enable.
+
+Direct 		: 	this component isused for synchronous message inside camel content.
+Direct-Vm 	:	Used for synchronous message delevery outside camel context.
+SEDA 		: 	Used for Asynchronous message deleivery in asynchronous manner inside camel context.
+VM 			:	Used for Asynchronous message deleivery in asynchronous manner outside camel context.	
+
+DraBack of Seda and VM : the biggest drawback of using in memory messaging like seda and VM is that if the application crashes , there is a big chance
+				to loss our messages.
+
+ActiveMq	:	ActiveMQ is broker to ensure guaranted message delevery in asynchronous manner to other endpoint by persisitning the data in kaha db.
+			
+			After server/AMQ down ,because it's persist the message in file on ActiveMq broker server ,when server is up it starting read the queue
+			message from the file which is left before the server down.
+			
+			seda is done same thing what is atcivemq done, but not used file or db to persist queue message and message lost if server or
+			application down.
+			
+			By default acitvemq broker concurrently proceessed 20 queueu message. we can increase or decrease default consumer.
+			we can set it's values as :
+				<beea id="poolConnectionfactory" in-it-mehtod="start" .........
+				<property name="maxConnections" value="8"/>
+				<......../></bean>
+				
+			<!-- configure the camel activemq component to use the current broker -->
+
+			<bean id="confact" class="org.apache.activemq.ActiveMQConnectionFactory">
+					<property name="brokerURL" value="vm://${amq-broker}?create=false"/>
+					<property name="userName" value="${activemq.username}"/>
+					<property name="password" value="${activemq.password}"/>
+			</bean>
+
+			<bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent" >
+				<property name="connectionFactory" ref="confact" />
+
+			</bean>
+
+			<bean id="pooledConnectionFactory" 
+				  class="org.apache.activemq.pool.PooledConnectionFactory" 
+				  init-method="start" 
+				  destroy-method="stop">
+				<property name="maxConnections" value="8" />
+				<property name="connectionFactory" ref="confact" />
+				 <property name="expiryTimeout" value="-1" />  
+				<property name="idleTimeout" value="-1" />
+			</bean>
+
+			<bean id="jmsConfig"  class="org.apache.camel.component.jms.JmsConfiguration">
+				<property name="connectionFactory" ref="pooledConnectionFactory"/>
+				<property name="concurrentConsumers" value="8"/>
+			</bean>
+
+			<bean id="jms" class="org.apache.activemq.camel.component.ActiveMQComponent">
+				<property name="configuration" ref="jmsConfig"/>
+			</bean>
+				
+ActiveMq DLQ:	When deleivery messgae to a endpoint getting unsuccessful and message is importent and need to try redeleiver again ,camel provide
+				DeadLetterChannel to redeleiver message . myDeadLetterErrorHandlerit 			
+			
+				failover:(tcp://broker1:61616,tcp://broker2:61616,tcp://broker3:61616)
+
+			https://stackoverflow.com/questions/19481973/dead-letter-queue-in-camel-vs-activemq
+			<bean id="myDeadLetterErrorHandler" class="org.apache.camel.builder.DeadLetterChannelBuilder">
+					<property name="deadLetterUri" value="jms:queue:deadlc"/>
+					<property name="redeliveryPolicy" ref="myRedeliveryPolicyConfig"/>
+				</bean>
+
+				<bean id="myRedeliveryPolicyConfig" class="org.apache.camel.processor.RedeliveryPolicy">
+					<property name="maximumRedeliveries" value="3"/>
+					<property name="redeliveryDelay" value="5000"/>
+				</bean>
+
+CamelContext   : At a high level, the architecture of Camel is simple. CamelContext represents the Camel runtime system, and it wires different 
+				 concepts such as routes, components, or endpoints.
+				 
+MessageExchange Arct : It contains inOnly messsage type by default , we can ovveride this default type by using exchangepattern=inOut.
+					   If we use inOut , exchange will be empty.
+					   
+
+Exception :  We can handle exception in camel of three types.
+			1 : onException ,2 : doTry doCatch doFinally  ,  3 : Error Handler
+			
+			1 : >doTry.....doCatch
+			2 : <onException>
+				<exception>com.mycompany.ValidationException</exception>
+				<redeliveryPolicy maximumRedeliveries="2" delay="5000"/>
+			 </onException>
+			3 : Error Handler	 
+			 
+Ftp component : 
+		ftp://[username@]hostname[:port]/directoryname[?options]
+		sftp://[username@]hostname[:port]/directoryname[?options]
+		example : Form(ftp://host/directory?userName=user&password=pass&antInclude=**/*.xml)
+File : 
+
+		include : the Include file option is used to specify a filter and it allows us to specify a regular expression to include certain file 
+				based on their names or pattarns. 
+				Exmple : from("file://input-dir?include=.*\\.txt")
+				.*\\.txt : A regex pattern that matches any file with a .txt extension.Only these files will be proceessed.
+
+		antInclude (filter) : Ant style filter inclusion. Multiple inclusions may be specified in comma-delimited format.
+				from("ftp://admin@localhost:2222/public/camel?antInclude=**/*.txt").to("...");
+				Means that only .txt files will be processed, while other files types will be ingnored.
+				**/*.txt : matches all .txt files inte current dir and any sub directery.
+				**/data/*.csv - matches all .csv files in any data dir.
+			
+		exclude  : the exclude option allows us to fileter out files or resources that we do not want to process from a dircectory or endpoint.
+			
+		excludeExt 	: is used to exclude files matching file extension name (case insensitive). For example to exclude bak files, then use 
+				excludeExt=bak , Multiple extensions can be separated by comma, for example to exclude bak and dat files, use excludeExt=bak,dat . 
+			   It allows us to provide a list of file extension,and any file that has one of those extensions will be ignored during route processing.
+
+		antExclude (filter) :this option allows us to specify one or more Ant-style patterns to exclude files or resources from being proceessed by 
+				camel route. Example : From("file://input-dir?antExclude=**/*.bak, **/tmp*")
+				this pattern exclude any files with a .bak extension and any files that start with "temp".
+
+Difference b/w processing and transformation : after receiving a message doing some operation does not change body of message called processing and
+		if we are doing anything that change the body of message called transformation.
+												
+WHAT IS THE DIFFERENCE BETWEEN TRANSFORM AND SET BODY? : 
+		Transform : it is used to change the content of a message as it moves through a route. It allows us to take the incoming message and 
+		modify its body , fomrat or structure , preparing it for further processing .In simple words, changing or converting the message from one 
+		form to another. Exaple : from("direct:start").
+									.transform().constant("Hello , world")		
+		Means transform() function replaces the original message with "Hello , world" .
+		 Example : from("direct:start")
+					.transform().simple("Received : ${body}").to("log:output")
+		here original message is trnasformed by adding the next "Received:"	 before the actual content of the messgae body.		
+		The Transform EIP always sets the result on the OUT message body. 
+		
+		Set Body done the same thing what is done by transform() EIP. sets the result accordingly to the Exchange Pattern on the Exchange.
+		
+		Basic diff : 
+		1 : setbody is more specific like we telling camel "set the body to this new value." .
+			transform implies changing or converting/trnasforming the body like, "take the existing body and modify it into this new format"
+		2 : setBody : we use it when we want to set the message body to a specific value or format.
+			transform : often used to apply a trnasformation to the body, such as reformatting or adjusting the data bsed on the existing content.
+		
+
+Transacted Route : A transacted route  ensures that a series of step within a route are executed within a transaction.If one step fails , all 
+		preceding step rollback.
+		Or
+		The concept of a transacted route refers to using transaction within a camel route, ensuring that the entire route is proceessed succefully
+		as a unit of work. If any part of the route fails, the entire transaction can be rolled back.
+		For setup transacted route : Need transaction manager (like DataSourceTransactionManager for Databases) or any other transaction manager,
+		depending on your use case.
+		CamelRoute: 
+			form("direct:start")
+				.transacted() //mark the routes as transacted,here wa can also define customized transaction policy by using SpringTransactionPolicy.
+				.to("bean:serviceBean")
+				.to("jpa:Entity")
+				.to("log:TransactionCompleted");
+		
+			 
+There are at list four diffrent mechanism by which
+			   
+Spring Boot DevTools	:	Provides fast application restarts, LiveReload, and configurations for enhanced development experience.
+
+
+SSL Certificate : SSL stands for Secure Sockets Layer, a protocol that encrypts and authenticates the communication between your API and its clients.
+		HTTPS stands for Hypertext Transfer Protocol Secure, which is the application of SSL to HTTP, the standard protocol for web and API
+		communication.
+				
+
+
+>Ap/servcies to make handshake , sucuritu machanism ,key/signature authenticatation.
+>self generated and client provide given by client to use their certificate in that public 	
+>
+
+echo | openssl s_client -servername NAME -connect 6eprodr4xapi4.navitaire.com:443 |sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > paymentNavitaire.crt
+ 
+keytool -import -trustcacerts -keystore paymentNavitaire.jks -storepass 123456 -alias 6eRemedy -import -file paymentNavitaire.crt

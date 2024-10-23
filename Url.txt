@@ -1,0 +1,43 @@
+http://localhost:8084/api/example/jsontoxml
+{
+"name":"vinod",
+"age":33
+}
+
+2: http://localhost:9092/api/vindXSDDemo
+{
+    "Class": {
+        "Student": {
+            "firstname": "vinod",
+            "lastname": "vind",
+            "age": 23
+        }
+    }
+}
+
+3 : http://localhost:9092/api/json-xml-validator
+{
+    "Class": {
+        "Student": {
+            "firstname": "Ajeet",
+            "lastname": "Kushwaha",
+            "age": 23
+        }
+    }
+}
+
+4 : http://localhost:9092/api/xml-validator 
+	<Class>
+        <Student>
+            <firstname>Ajeet</firstname>
+            <lastname>Ajeet</lastname>
+            <age>34</age>
+            <city id="2">Gauspur</city>
+        </Student>
+        <Student>
+            <firstname>vinod</firstname>
+            <lastname>vinod</lastname>
+            <age>22</age>
+            <city id="3">Gauspur</city>
+        </Student>
+	</Class>

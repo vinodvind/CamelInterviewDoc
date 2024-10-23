@@ -1,0 +1,36 @@
+				Interview question
+
+Quest 1 : 	How to solve issue when it will come on production.
+Answer  : 	If issue comes on prod then first we check on uat with same input parameter , fixed issue there and then we will do same 
+			changes on Production.
+
+Quest 2 : how to create csv 
+Answer  :
+
+Quest 3 : How to handle 20/30 services in one bundle.
+
+Cognizant internal Quest : 
+Quest 4 : what is diff b/w seda and multicast.
+Quest 5 : how to configure a db using mybatis and without mybatis.
+Quest 6 : Why use integration and why we use camel for integration.
+Quest 7 : Why
+
+:::::::::::::::::::
+Red Hat JBoss Fuse supports a variety of standards and protocols for creating web services, such as SOAP and WSDL among others, and allows for
+ Contract-first or Code-first development with JAX-WS. In addition, Red Hat JBoss Fuse provides a standard way to build RESTful services in Java
+ with JAX-RS.
+ 
+ JBoss Fuse is a combination of several open source technologies, including Apache Camel, Apache CXF, Apache ActiveMQ, Apache Karaf, and Fabric8 in a
+ single integrated distribution:
+
+
+Component Used : camel-jdbc, camel-mybatis, Activemq , Direct, restlet, camel-jetti, camel-cxf, ftp , file ,camel-celocity,Qurtz, timer,
+                 EIP : log, receipentList, Spilleter, Marshal, xPath,From,to ,wiretap
+				 DataFOrmat : camel-jakson , camel-bindy, camel-xmljson, jax-b
+				 
+	First for new development, BA create a user stroy on tfs and assign to development team ,now we analysis and understand the bussiness requirement of
+	user stroy ,If we don't understand some bussiness requiremnets, then arrange a metting with BA team and understand bussiness requiremnets. 
+	afater that we share time effort estimation to BA,spoc,and client/user ,after getting aal requred permission start development on UAT. after 
+	developemnt we do sanity/unit testing form our end QA team do the UAT testing  with user, after user confirmation and security team confirmation .
+	we deplye on production , before deploye on prod we check port number availbility, database accessbility.
+	for deployement on prod, spoc ,user and stackholder dbteam, are involed.

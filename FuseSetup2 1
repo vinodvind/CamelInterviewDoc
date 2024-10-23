@@ -1,0 +1,62 @@
+1) *maven.setting Xml 
+
+
+
+/mnt/releases/ESB-SAPSkyLedger-CI/20200630.1/cfg/SAPSkyLedgerFeature.xml
+
+India@123
+
+
+
+
+features:addurl mvn:in.domain.webservices/SAPSkyLedgerFeature/1.0.0/xml/features
+
+features:addurl mvn:in.domain.webservices/SAPSkyLedgerFeature/1.0.0/xml/features
+
+add URl: https://repo.domain.in/repository/domainESB-ProdJBoss/
+
+2)*.url.mvn.cfg:'
+
+uncomment and add path 
+
+url.localRepostery= ${karaf.home}/data/repository
+
+url.maven.setting=${karaf.etc}/maven-settings.xml
+
+
+nothing change just verify
+
+3)karaf.shell.cfg
+need to change port number
+ sshport = 8101   updated ---> 8301
+ 
+4)karaf.management.cfg
+
+
+update port
+rmiRegistryPort =1099   ---> updated  2199
+
+rmiserverport =44444  ---> 564444
+
+5) pax.web.cfg
+
+service.http.port = 8181  ---> upadte 8384
+
+
+6)logging.cfg
+
+ after append.append= true --> add below patern line
+ 
+ 
+log4j.appender.sift.DatePattern='.'yyyy-MM-dd
+
+7)user.properties
+ 
+ (user anme and passsword)
+ 
+
+
+
+ 
+
+

@@ -1,0 +1,339 @@
+>Apache-CXF  :Apache CXF™ is an open source services framework. CXF helps you build and develop services using frontend programming APIs, like 
+			JAX-WS and JAX-RS. These services can speak a variety of protocols such as SOAP, XML/HTTP, RESTful HTTP, or CORBA and work over a
+			variety of transports such as HTTP, JMS or JB
+			
+JAX-WS     : Java API for XML Web Services (JAX-WS) is a standardized API for creating and consuming SOAP (Simple Object Access Protocol) web
+			services. 
+ 
+Camel CXF : The camel CXF component provides integration with Apache CXF for connecting to JAX-WS services hosted in CXF.
+ 
+ 
+SOAP : 
+
+how to secure our soap configure : Yes 
+what is use of dataFormat [QUERY PARAMETERS]  :  RAW,PAYLOAD,CXF_MESSAGE ,POJO
+									
+MESSAGE  : if we use this , when comes any error/exception its not throw as exception so it is dificult to manage excption 
+PAYLOAD  : it throw excption when any issue come to consuming soap and esay to handle excption.
+
+MTOM (Payload Mode) : 
+
+ApacheCamel :Yes
+SpringDSL   : Yes
+XML         :YEs
+XSLT Component    : XSLT, which stands for Extensible Stylesheet Language Transformations, is a declarative, XML-based language used for the 
+			transformation of XML documents into other XML documents.
+			OR
+			XSLT is used for XML to XML conversion, where we can use for-each, if-else 
+			The XSLT component allows you to process a message using an XSLT template. This can be ideal when using Templating to generate 
+			response for requests.   (<artifactId>camel-xslt-starter</artifactId>)
+			OR 
+			XSLT (Extensible Stylesheet Language Transformations) is a language for transforming XML documents into other XML documents or or other
+			formats such as HTML for web pages, plain text or XSL Formatting Objects. The :xslt component in Apache Camel allows you to process 
+			message using XSLT template.
+			
+			URI FORMAT : xslt:templateName[?options]  OR <to uri="xslt:in/goindigo/flightinfo.xsl"/>
+				
+Xquery component  : 
+			Camel supports the use of Camel's XQuery Expression Language along with the transform statement as a quick and easy way to
+			transform an XML message within a route.
+			
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-saxon</artifactId>
+				<version>${camel-version}</version>
+			</dependency>
+ 
+XSD (XML schema defination)   : XSD (XML Schema Definition) is like a set of rules or a blueprint that tells you how to build an XML document 
+			correctly. XML documents are used to store and transport data, and XSD helps ensure that the data is organized in a specific way.
+			<to uri="validator:in/goindigo/flightinfo.xsd"/>
+			XSD checks if the data in the XML file is in the right format. For example, if you say an XML file should have a "name" that’s a string
+			of text and an "age" that’s a number, XSD will check to make sure that’s true. This helps avoid mistakes, like putting letters where 
+			numbers should be.
+			In simple terms, XSD is used to make sure data stored in XML files is organized correctly and follows the rules you set, so that 
+			computers can easily understand and use it.
+					
+Camel-Jolt : The Jolt component allows you to process a JSON messages using an JOLT specification. This can be ideal when doing JSON to JSON 
+			transformation..				
+
+Mysql    :
+Redis    :	Redis is an open source in-memory data store that can be used as a database, cache, or message broker. It's often used for caching web pages
+			and reducing the load on servers.
+
+ActiveMq : Yes
+Elastic Search	:	ELK Stack is designed to allow users to take data from any source, in any format, and search, analyze, and visualize that data 
+			in real time.
+			E stands for ElasticSearch: used for storing logs.
+			L stands for LogStash : used for both shipping as well as processing and storing logs.
+			K stands for Kibana: is a visualization tool (a web interface) which is hosted through Nginx or Apache.
+AWS     : 		
+Amazon S3	:Amazon Simple Storage Service (Amazon S3) is an object storage service that offers industry-leading scalability, data availability, 
+			security, and performance. We can use Amazon S3 to store and retrieve any amount of data at any time, from anywhere.
+Kubernates	:
+Git CodeCommit	:
+
+>Restlet : <from uri="restlet:http://{{esbHost}}:{{esbPort}}/api/flightInfo?restletMethod=POST"/>
+
+>DB Call : <to uri="mybatis2:flightinfo?statementType=SelectList" />
+
+>JSON    :<dataFormats>
+			<json id="jsonOrder" library="Jackson" />
+		  </dataFormats> 
+		  
+>Json-validator :   The JSON Schema Validator component performs bean validation of the message body against JSON Schemas
+					<to uri="json-validator:json-schema/swap.json"/>
+					<dependency>
+						<groupId>org.apache.camel</groupId>
+						<artifactId>camel-json-validator</artifactId>
+					</dependency>
+					
+
+SOAP service calling : 1 : <dependency>
+							<groupId>org.apache.camel</groupId>
+							<artifactId>camel-cxf</artifactId>
+						   </dependency>
+						   
+					   2 : <cxf:cxfEndpoint id="GetNavitaireSignature"
+								address="{{SessionManager}}" wsdlURL="{{SessionManager}}?wsdl"
+								endpointName="xsd:BasicHttpBinding_ISessionManager"
+								serviceName="xsd:SessionManager"
+								xmlns:xsd="http://schemas.navitaire.com/WebServices">
+								<cxf:properties>
+									<entry key="setDefaultBus" value="true" />
+								</cxf:properties>
+							</cxf:cxfEndpoint>
+							
+						3 :
+
+json and xmlJson dataFormats : 	https://access.redhat.com/documentation/en-us/red_hat_fuse/7.0/html/apache_camel_component_reference/xmljson-dataformat	
+						        https://stackoverflow.com/questions/60875136/cant-translate-xml-to-json-with-apache-camel-3-1-0
+						
+						<dataFormats>
+							<json id="jsonOrder" library="Jackson" />
+							<xmljson id="xmljsonWithOptions" forceTopLevelObject="true"
+								trimSpaces="true" rootName="newRoot" skipNamespaces="true"
+								removeNamespacePrefixes="true" expandableProperties="d e" />
+						</dataFormats>
+						
+						CamelContext context = new DefaultCamelContext();
+						
+						context.addRoutes(new RouteBuilder() {
+							public void configure() {
+								from("file:/tmp?fileName=in.xml")
+								.marshal(xmlJsonFormat)              
+								.to("file:/tmp?fileName=out.json")
+								.end();
+							}
+						});
+						
+						<route>
+							<from uri="direct:marshal"/>
+							<marshal ref="xmljson"/>
+							<to uri="mock:json" />
+						</route>
+						
+						<route>
+							<from uri="direct:unmarshalWithOptions"/>
+							<unmarshal ref="xmljsonWithOptions"/>
+							<to uri="mock:xmlWithOptions"/>
+						</route>
+
+> JAXB    : https://www.javainuse.com/camel/camel-marshal-unmarshal-example						
+
+>		<route id="GetFlightAvailableSectorInfoSeqRoute4">
+			<from uri="restlet:http://{{esbHost}}:{{flightinfoPort}}/api/getFlightAvailableSectorInfo/{path}?restletMethod=POST" />
+
+			<doTry>
+				<log message="GetFlightAvailableSectorInfo_001  hit recieved at ${date:now:yyyy-MM-dd HH:mm:ss} URL :: ${header.CamelHttpUri}" />
+				<log message="URI ${header.url} And dynamic route ${header.DynamicRoute}  , ${header.CamelHttpUri}" />
+				<choice>
+					<when>
+						<simple>${header.CamelHttpUri} contains 'swap'</simple>
+						<to uri="direct:swap" />
+					</when>
+					...................
+					
+					
+					<route id="GetFlightAvailableSectorInfoRoute1">
+			<from uri="direct:swap" />
+
+			<doTry>
+				<to uri="json-validator:json-schema/swap.json"/>
+				<log message="GetFlightAvailableSectorInfo_003 SWAP" />
+				<unmarshal ref="jsonOrder"/>
+				<removeHeaders pattern="*" />
+				<setHeader headerName="DepartureDate"><simple>${body[DepartureDate]}</simple></setHeader>
+				<setHeader headerName="DepartureStation"><simple>${body[DepartureStation]}</simple></setHeader>
+				<setHeader headerName="ArrivalStation"><simple>${body[ArrivalStation]}</simple></setHeader>
+				<setHeader headerName="DomainCode"><simple>{{DomainCode}}</simple></setHeader>
+				<setHeader headerName="AgentName"><simple>{{AgentName}}</simple></setHeader>
+				<setHeader headerName="IndigoPWD"><simple>{{IndigoPWD}}</simple></setHeader>
+				<setHeader headerName="TKFlightsRange"><simple>{{TKFlightsRange}}</simple></setHeader>
+				<to uri="velocity:session.vm" />
+				<log message="GetFlightAvailableSectorInfo_004 session velocity." />
+				<setHeader headerName="SOAPAction">
+					<constant>http://schemas.navitaire.com/WebServices/ISessionManager/Logon</constant>
+				</setHeader>
+
+				<to uri="cxf:bean:GetNavitaireSignature?dataFormat=MESSAGE" />
+				<bean ref="process" method="getSignature" />
+				
+				<log message="GetFlightAvailableSectorInfo_005 SWAP Stripped SOAP Calling.. " />				
+				<to uri="velocity:FlightInfoRequest.vm" />
+				<log message="GetFlightAvailableSectorInfo_006 SWAP after VM"/>
+
+				<setHeader headerName="SOAPAction">
+					<constant>http://schemas.navitaire.com/WebServices/IOperationManager/GetFlightInformation</constant>
+				</setHeader>
+				<to uri="cxf:bean:GetNavitaireFlightInfo?dataFormat=MESSAGE" />
+				
+				<removeHeaders pattern="*" excludePattern="DepartureDate|DepartureStation|ArrivalStation|TKFlightsRange" />
+
+				<convertBodyTo type="java.lang.String" />
+				<log message="GetFlightAvailableSectorInfo_007 SWAP before xml to json conversion data" />
+
+				<marshal ref="xmljsonWithOptions" />
+				<log message="GetFlightAvailableSectorInfo_008 SWAP after xml to json conversion data" />
+
+				<bean ref="process" method="getJsonFlightAvailInfo" />
+				<marshal ref="jsonOrder" />
+
+				<setHeader headerName="Content-Type"><simple>application/json</simple></setHeader>
+				<setHeader headerName="CamelRestletResponse"><simple>${body}</simple></setHeader>
+
+
+				<doCatch>
+					<exception>org.apache.camel.component.jsonvalidator.JsonValidationException</exception>
+					<log message="GetFlightAvailableSectorInfo_009 SWAP inside Json Validation exception is ${exception}" />
+					<removeHeaders pattern="*" />
+					<process ref="jsonValidatorException" />
+					<setHeader headerName="Content-Type"><simple>application/json</simple></setHeader>
+					<setHeader headerName="CamelRestletResponse"><simple>${body}</simple></setHeader>
+					<setHeader headerName="CamelHttpResponseCode"><simple>500</simple></setHeader>
+				</doCatch>
+					
+					
+					
+
+					
+							
+							
+
+	   <setHeader headerName="SOAPAction">
+			<constant>http://schemas.navitaire.com/WebServices/ISessionManager/Logon</constant>
+	   </setHeader>
+	   
+What is the difference between Transform and Set Body? : 
+		The Transform EIP always sets the result on the OUT message body. Set Body sets the result accordingly to the ExchangePattern on the
+		Exchange .					   
+
+How to change massege body  :   
+		1 : <convertBodyTo id="PendingUrlconvertBodyTo1" type="java.lang.String" />
+		2 : Transform()	3 :setBody
+									
+
+How to use sql in Spring DSL	: <setBody><simple>$select * from Emp where empName IN('atul','vinod')</simple></setBody>  (NOT IN)
+		<to uri="jdbc:jdbcdbconnectionID"?statementType=SelectList"/>
+		select * from emp where empname IN('a','b').
+
+Exchange : getIn	: public void setheadersJSON(Exchange exchange)
+		Map<String, Object> map = (Map<String, Object>)exchange.getIn().getBody();
+															
+								exchange.getIn().setHeader("transactiondate", getConvertedDate(details.get("date").toString()));
+								exchange.getIn().setHeader("transactiondateDB", getConvertedDateDB(details.get("date").toString()));
+
+
+setProperty EIP : 			An Exchange property is a key/value set as a Map on the org.apache.camel.Exchange instance. This is not for setting 
+							property placeholders.	
+							 <from uri="direct:a"/>
+							<setProperty name="myProperty">
+								<constant>test</constant>
+							</setProperty>
+							<to uri="direct:b"/>
+							Properties are used to contain global-level information, whereas message headers are specific to a particular message.
+							a developer, can store and retrieve properties at any point during the lifetime of an exchange.
+
+							Exchange Properties (.setProperty) can be used to hold data you might need during the exchange's lifecycle, without 
+							worrying about propagating their values to other systems.							
+
+Camel EXchange         : An Exchange is the message container holding the information during the entire routing of a Message received by a Consumer.
+
+						org.apache.camel.Exchange — An exchange in Camel is the message’s container during routing. An exchange also provides support
+						for the various types of interactions between systems, also known as message exchange patterns (MEPs). 
+						
+						A Camel exchange has an ID, MEP, exception,message(body) and properties. It also has an IN message to store the incoming
+						message, and an OUT message to store the reply.
+
+							
+							
+							public void getSelectTransaction(Exchange exchange)
+							{
+								Map<String, Object> map = new LinkedHashMap<String, Object>();
+								map.put("AccountTransactionID", exchange.getIn().getHeader("AccountTransactionID"));
+								exchange.getIn().setBody(map);
+								
+								
+							}
+autoStartup	: by default true , if we want a route to be not starting, we use autoStartup=false.
+		
+
+startupOrder: The routes with the lowest startupOrder are started first and the ones with the highest are started last.	
+			<routes>
+				<route startupOrder="1">
+					<from uri="seda:foo"/>
+					<to uri="mock:result"/>
+				</route>
+
+				<route startupOrder="2">
+					<from uri="direct:start"/>
+					<to uri="seda:foo"/>
+				</route>
+				<route startupOrder="">
+					<from uri="direct:bar"/>
+					<to uri="seda:foo"/>
+				</route>
+			</routes>
+			In the route above we have not defined a startupOrder on the last route direct:bar in which Camel will auto assign a number for it,
+			in which this case will be 1000; therefore the route will be started last.
+			
+				
+Seda?waitForTaskToComplete : Option to specify whether the caller should wait for the async task to complete or not before continuing. The following
+							three options are supported: Always, Never or IfReplyExpected. The first two values are self-explanatory. The last 
+							value, IfReplyExpected, will only wait if the message is Request Reply based. The default option is IfReplyExpected.
+
+Enum values:				
+
+
+Quartz	:	The Quartz component is a timer component based on Terracotta's Quartz, which is an open source implementation of a job scheduler. 
+		The Quartz component provides the underlying implementation for both the simple scheduled route policy and the cron
+		scheduled route	policy.
+		
+		The Quartz component provides a scheduled delivery of messages using the Quartz Scheduler
+		quartz://timerName?options
+		quartz://groupName/timerName?options
+		quartz://groupName/timerName?cron=expression
+		quartz://timerName?cron=expression
+		The component uses either a CronTrigger or a SimpleTrigger
+			
+Simple Scheduled Route	:	The simple scheduled route policy is a route policy that enables you to start, stop, suspend, and resume routes, 
+
+		the timing of these events is defined by providing the time and date of an initial event
+		The simple scheduled route policy depends on the Quartz component, camel-quartz.
+		
+		<route id="myroute" routePolicyRef="startPolicy">
+		 <bean id="startPolicy" class="org.apache.camel.routepolicy.quartz.SimpleScheduledRoutePolicy">
+			<property name="routeStartDate" ref="date"/>
+			<property name="routeStartRepeatCount" value="1"/>
+			<property name="routeStartRepeatInterval" value="3000"/>    	
+		</bean> 
+		>Same as configuration for stop route 
+											
+Cron Scheduled Route Policy    : 	The cron scheduled route policy is a route policy that enables you to start, stop, suspend, and resume routes,
+		where the timing of these events is specified using cron expressions. To define a cron scheduled route policy, create an 
+		instance of the following class:	
+		<route id="testRoute" routePolicyRef="startPolicy">
+		
+		<bean id="startPolicy" class="org.apache.camel.routepolicy.quartz.CronScheduledRoutePolicy">
+			<property name="routeStartTime" value="*/3 * * * * ?"/>
+		</bean>
+		Seconds Minutes Hours DayOfMonth Month DayOfWeek [Year]

@@ -1,0 +1,112 @@
+
+>L1/L2 supopprt   shifshell, L1, Repoeritn mangaer, delevery manager
+he incident management process can be summarized as follows:
+An Incident : 
+Step 1 : Incident logging.                    Phonecalls/emails/SMS           Incident/service request
+Step 2 : Incident categorization.             Busuness/network/database    
+Step 3 : Incident prioritization.			  Critical/High/medium/low
+Step 4 : Incident assignment.
+Step 5 : Task creation and management.
+Step 6 : SLA management and escalation.
+Step 7 : Incident resolution.
+Step 8 : Incident closure. 
+
+
+>ITLT2 & ITLT : ITLT2 is process where we manage prod INC/issue .First we recive INC like p1 ,p2 ,p3 based on criticality. Suppose ANY
+	p1 issue coms on prod Application ,then we have assigned a ticket into our bin (service now tool) with priority then we check ticket priority 
+	and assign in our team/group. Thean analysis issue as per data given by user .THere is also we keep in mind that it is p1, or p2, ..... , 
+	supppose if p1 then we anaylsis and also invite a team meating with all stack holder like db team, api/ftp consumer app team .after resolving
+	the issue we close INC with  proper resolution details and then closed the INC.
+
+>Proative service, Service and server.
+
+>Ticket , WO , CR, INC P1 p2 p3
+
+>ESB FUSE Container monitoring and stop , start, status
+
+>koi issue : INC raised in ESB bin and get mail also from user side and call from Shiftmanager from client side and do the needful , explian in 
+	details. Use BMC and Service noice
+
+>cfg,configuration file, and user properties  
+   1 : /etc/login.cfg  service log pattern ,name of logfile, zip timing, logfiel size.
+   2 :how to give cpu and ram to a container.  (GC memmory full, restart container, increase memmory]
+
+>log check,          less command open in vim but not edditable, only for read
+ tailf filename   
+                   
+tailf filename   by default 10 niche se
+
+tailf -n 50 filenme 	niche se	50 line	
+
+>system.property : container port                         (service listing 61 series, 81 user/system listing
+user.properties  : set username and password 
+
+user.properties me root wali line ko uncomment  krenge   
+
+> ager container not starting we check fuse.log log file [/data/log]
+	  
+
+>netstat -tulnp or netstat -tulnp port	:all listing port and PID container  
+
+>grep ,cat, zcat
+cat filename| grep -i 'keyword'
+
+*************
+Redhat AMQBroker master slave :
+https://access.redhat.com/documentation/en-us/red_hat_amq/6.3/html/fault_tolerant_messaging/fmqfaulttolmasterslave
+
+failover:(tcp://broker1:61616,tcp://broker2:61616,tcp://broker3:61616)
+<kahaDB directory="/sharedFileSystem/sharedBrokerData" lockKeepAlivePeriod="2000">
+    <locker>
+        <shared-file-locker lockAcquireSleepInterval="10000" />
+    </locker>
+</kahaDB>
+
+***************
+Install Dependency:
+features:install camel-restlet
+ 
+Deploy jar file on server
+Step-1: mvn clean install
+Step-2: mvn clean deploy
+Step-3: install -s mvn:in.goindigo.webservices/CloudCherryMail/1.0.2
+ 
+Find Port use or not
+netstat -tulnp | grep 8775
+ 
+Manual Jar Install
+install file:/directoryName/jarfileName(bundleName)
+ 
+bin/start - to start container
+bin/client - login to container
+bin/stop - stop container
+shutdown - shutdown the container
+Route-start - for use forcefully route
+route-list -check all running and stopped route
+Route-start givenID:	   
+	   
+	   feature:install camel-restlet
+	   
+	   mvn clean install
+	   mvn clean deployee
+	   install -s mvn:in.goindigo.webservices/CloudCherryMail/1.0.2
+	   
+	   mvn wrap file:/dirctery/jarfilename/1.1.2
+	   
+start id;log:tail;log:clean	   
+	   
+	   
+	   
+	   
+Hi Dibakar,
+
+Good morning
+ 
+I am looking for project and have experienced on Apache camel , JBoss fuse, Java, ActiveMQ and Apache camel with Spring Boot
+ 
+Currently working and learning Camel Quarkus and integrate Kafka with camel.
+ 
+If there is any opportunity on Apache Camel , please let me. 
+ 	   
+	   
+	   

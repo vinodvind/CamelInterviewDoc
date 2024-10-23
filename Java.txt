@@ -1,0 +1,319 @@
+1208870077638788
+
+1 : Query parameter :
+
+2 : Lambda Expression : https://www.baeldung.com/java-8-interview-questions
+    Lambda Expression : https://www.youtube.com/watch?v=MMruoVq6160
+		a : hence java is a OOP language so to bring functional programing in java, lamda expression is used.
+			In Java : data sotred in form of object and classes
+			In Functional Pro : data stored in function and variables. and  (https://www.geeksforgeeks.org/functional-programming-in-java-with-examples/)
+			and Pure functional programming languages don’t allow any mutability in its nature whereas a functional style language provides
+			higher-order functions but often permits mutability 
+			Pure functions: A function is called pure function if it always returns the same result for same argument values and it has no side
+			effects like modifying an argument (or global variable) or outputting something.
+			
+		b: Code optimization
+	Lamda expression is annonoums function menas it dos't have name of method name, return type and access modifiere.
+	Lamda expression can be invoked only through FI
+	it is define by new operator as : ->  (known as an arrow operator or a lambda operator.)
+
+3 : Functional Interfaces :	Invoke lamda expression we need to know functional interface.
+		FI : whcih contains only one single abstract merthod (SAM).
+		before java 7 : FI contains only one abstract method
+		Onwords java 7 : any number of default method and static method also allowed in FI adn one abstract method.
+		
+		Exaple of FI :
+					1 : Runnable -  run()
+					2 : Callable - Callc()
+					3 : Comprable - CompareToC() ; 4 : ActionListner - ActionPerform()
+		we can use @FunctionalIntrface annotation to make a interface as FI exepicitily 			
+	
+	Pre-Defined Functional Interface : available in java.util.function package . Contains only one abstract mathod test()return a boolean value.
+	it can invoke lambda function.
+	
+4 : Stream API: 
+		the Stream API is used to process collections of objects. A stream is a sequence of objects that supports various methods & operations like
+		search, filter, map, reduce (which can be pipelined to produce the desired result)to produce the desired result. A stream is not a data
+		structure instead it takes input from the Collections, Arrays,or I/O channels
+		
+	The new java.util.stream package has been added to JDK8, which allows Java developers to perform operations like search, filter, map, 
+	reduce, or manipulate collections like Lists.  OR
+	To process the group of collections object/elements we use Stream api.
+	
+	Stream Api Mwthod : 
+					a-Arrays.stream()		Parameters: This method accepts a mandatory parameter array which is the array of whose elements are to 
+											be converted into a sequential stream.
+											Return Value: This method returns a Sequential Stream from the array passed as the parameter.
+					b-Stream.filter()	:	returns a stream consisting of the elements of this stream that match the given predicate
+					c-Stream.map		:   Map transfer the object and take a consumer as a parameter (lambda function)and it did not return
+											 anything just consume
+					c-Stream.distinct() :	eliminate duplicate elements from a given stream					
+					c-Collectors.toList :	The toList() method of the Collectors class returns a Collector that accumulates(deposite) the input 
+											elements into a new List.
+											THis is the end of stream processing	.										
+5 : Collection : 
+	To stroe the group of elements we used collections.Collection contains the group of object. to process the group of collections object/elements
+		we use Stream api.
+	Collection is framework which have Interfaces and it's iplementatiion calsses to store and manupulate group of objects.	
+		
+6 : 	How we can process data from the stream by using filter concept : 
+		we can not filter collection directoly , we use stream concept to filter collection. stream have number of methods to filter stream .
+		First of all we need to add collection into stream to process data.After adding collection to stream we use filter method which is take 
+		predicate(boolean expression) as parameter. predicate means taken a value and return a boolean.
+
+7 : stringbuffer and stringbuilder :https://www.digitalocean.com/community/tutorials/string-vs-stringbuffer-vs-stringbuilder
+
+		String vs StringBuffer vs StringBuilder :	
+		String is immutable whereas StringBuffer and StringBuilder are mutable classes.
+		StringBuffer is thread-safe and synchronized whereas StringBuilder is not. That’s why StringBuilder is faster than StringBuffer.
+		String concatenation operator (+) internally uses StringBuffer or StringBuilder class.
+		For String manipulations in a non-multi threaded environment, we should use StringBuilder else use StringBuffer class.
+
+Java 8 introduced a host of powerful features that have significantly enhanced the Java programming language. Introducing new features such as
+ Lambda Expressions, Stream API, Functional Interfaces, the new Date and Time API, and more.
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.camel.archetypes -DarchetypeArtifactId=camel-archetype-spring-boot -DarchetypeVersion=3.12.0 
+-DgroupId=com.cognizant.test -DartifactId=ESBCognizanttest -Dversion=1.0-SNAPSHOT -DinteractiveMode=false
+
+
+*********SpringBoot :https://www.ibm.com/topics/java-spring-boot
+		Java Spring Boot (Spring Boot) is a tool that makes developing web applications and microservices with Spring Framework faster and easier 
+		through three core capabilities.
+				Autoconfiguration :
+				An opinionated approach to configuration
+				The ability to create stand-alone applications
+				
+			Spring Framework offers a dependency injection feature that allows objects to define their own dependencies that the Spring container 
+			later injects into them. This feature enables developers to create modular applications consisting of loosely coupled components 
+			that are ideal for microservices and distributed network applications.
+
+Dependency Injection:	https://www.geeksforgeeks.org/top-spring-boot-annotations/?ref=asr2
+		The Dependency Injection is a design pattern that removes the dependency of the programs.Dependency Injection is the procedure of attaching
+		one object with another inorder to share data & access each other’s functionality. 
+		Autowiring in the Spring framework can inject dependencies automatically.
+		Autowiring in Spring internally uses constructor injection.	
+		
+		OR 	https://www.geeksforgeeks.org/spring-difference-between-beanfactory-and-applicationcontext/?ref=lbp
+		Dependency Injection is a design pattern that allows the spring container to ‘inject’ objects into other objects or dependencies.
+		In simple words, the control of creating objects and managing the spring components is taken care of by the Spring containers.
+
+IOC & beans	:Inversion of control container offers a solution for configuring and controlling Java objects(Java beans) by linking them together.
+		The main advantage is that such container-managed objects, known as beans, avoid creating XML files with prescribed configurations for 
+		them.However, it is possible to	do everything manually and add them. 
+
+Bean/Object :	https://www.geeksforgeeks.org/spring-understanding-inversion-of-control-with-example/?ref=lbp
+		In Spring, the objects that form the backbone of our application and that are managed by the Spring IoC container are called 
+		beans. A bean is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container and it is configured at 
+		run-time by Spring IoC Container.
+
+@Component	:	https://www.geeksforgeeks.org/spring-component-annotation-with-example/
+		When a class is annotated with @component, it tells Spring that it should be treated as a Spring bean. During the component scan, Spring 
+		will detect this class and register iti into the IoC container.
+		By default , the package scan starts from the package where our main class (annotated with @SpringBootApplication) is located
+		
+		OR it is a class-level annotation , and used to denote a class as a Component. A component is responsible for some operations. 
+		Spring framework provides three other specific annotations to be used when marking a class as a Component.
+			@Service	:	This Annotation specify that the class with @Service holds some business logic or services in it. Besides being used in 
+				the service layer, there isn’t any other special use for this annotation.
+			@Repository :	This Annotation specifies that the class with @Repository is dealing with CRUD Operations( Create Read Update Delete). 
+				It mostly deals with DAO(data access Object) or with Repositories that deal with databases.
+			@Controller	:	This Annotation specifies that the class with @Controller to indicate that they’re front controllers and responsible 
+				to handle user requests and for returning the appropriate responses to user. It is mostly used with REST Web Services.
+		
+		@component is a general-purpose generic stereotype annotation, whereas annotation like @Service , @Repository and @Controller are more 
+		specialized stereotype annotations. 
+		
+		OR
+		THe @component annotation indicate that this class is a Spring component, meaning Spring will detect it automatically during component
+		scanning and manage it's lifecycle. It allows Camel to use this class to set up routes.
+		
+@Autowired	: 
+		In Spring Boot , auto-wiring is a feature that allows Spring to automatically resolve and inject dependencies into components(classes)
+		without manually specifying them. It usese Dependency injection (DI) to manage object creation and wiring.
+		The most common way to achieve this is by using the @Autowired annotation, which telss spring to automatically inject the required bean into
+		a component(class).
+		
+		Ways to use Auto-Wiring in Spring boot :
+			1 : Field Injection (@Autowired)
+			2 : Constructor Injection
+			3 : Setter Injection
+		
+		
+Spring – BeanFactory
+
+@Bean :	Spring @Bean Annotation is applied on a method to specify that it returns a bean  to be managed by the Spring context(IoC container).
+		This method typically creates a new instance of a class and registers it as a bean, which Spring can inject wherever needed.			
+		
+		@Configuration
+		public class MyConfig{
+			@Bean
+			public MyService myservice(){
+				return new MyServiceImpl();
+			}
+		}
+		1 : @Configuration :	The class that contains the @Bean methods must be annoteted to let Spring know that it is a configuration class.
+		2 : Method Return Value : The method annotated with @Bean returns the object that you want to resister as a bean.
+		3 : Singleton by default : the bean is singleton by default, meaning the same instance will be injected wherever required.
+		4 : Custom Bean Name : By default, the name of the bean is the method name.However we can specify a custom bean name like this :
+			@Bean(name="customBeanName")
+		
+SPRING : The first and foremost thing when we talk about Spring is dependency injection which is possible because Spring is a container and behaves
+		as a factory of Beans.
+
+@RestController : https://www.geeksforgeeks.org/top-spring-boot-annotations/?ref=asr2
+		This annotation is used to create RESTful web-services, and is a specialized version of @Controller which we discussed earlier.
+		This is also a class level annotation that deals with various REST APIs – GET, PUT, POST, DELETE etc. A class is considered to be defining
+		various REST endpoints if it is annotated with @RestController.
+		It comprises of two sub-annotations – @Controller and @ResponseBody.
+		@ResponseBody:The default behaviour of a spring application is to assume that, every rest endpoint method will return some view page
+		like HTML or JSP which should be resolved by some view resolver. But, this annotation overrides this default behaviour to – indicating 
+		that all the methods in this controller will return some content rather than some view-page.
+
+@RequestMapping :	This annotation can used on a class level as well as method level for defining the path of URL which is our endpoints. It is
+		the core annotation to define the path which will return some response containing the resource requested by the client. 
+@GetMapping : 
+@PostMapping : 
+Handling Path Variables with @PathVariable : This is a method level annotation which allows us to be more specific based on context and fetch a 
+		more specific resource. For example, we might need the data of student with id = 5. Then we can specify the same in the URL while trying 
+		to fetch the resource.
+		
+		@PathVariable is used to pass & extract parameters from the endpoint to the method parameters and then perform operations on it.
+		Exaple : @RestController
+				public class ProductController {
+					  // id is the parameter passed in URL
+					@GetMapping("/api/product/{id}")
+					public Product getProduct(@PathVariable Long id) {
+						// Retrieve product with the ID specified in the URL from the Database.
+						return productService.getProductById(id);
+					}
+				}
+			Code Explanation : 
+			Assuming we have a Product class as POJO already defined and its service layer as well (productService – object).
+			When client hits the endpoint- /api/product/{id} the {id} will contain a positive integer to specify the product with a specific id.
+			It would look something like – /api/product/5. This indicates that the client is requesting the product with id = 5. This digit 
+			can vary depending on the client’s request.
+			
+		@RequestParam (Query parameters):https://www.geeksforgeeks.org/spring-boot-pathvariable-and-requestparam-annotations/
+		The @RequestParam annotation is used to extract data from the query parameters in the request URL.
+		Query parameters are the key-value pairs that appear after the ? in a URL
+			@RestController
+			@RequestMapping("/users")
+			public class UserController {
+
+				@GetMapping("/search")
+				public ResponseEntity<List<User>> searchUsers(@RequestParam("name") String name) {
+					// Implementation to search users based on the provided name
+					// ...
+					return ResponseEntity.ok(users);
+				}
+			}
+			In the above code, the @RequestParam annotation is used to extract the name parameter from the query parameters. The name parameter
+			is specified as an argument of the @RequestParam annotation. When a request is made to /users/search?name=John, the value John will 
+			be passed to the searchUsers method as the name parameter. You can then use this parameter to perform a search operation based on the
+			provided name.
+
+@Repository : This annotation is a class level annotation that signifies that this class is a data repository or Data Accessor Object (DAO) that
+		interacts with the database and perform CRUD Operations.
+		It is also considered a specialization of @Component that means a class annotated with @Repository is also implicitly annotated with
+		@Component and will be managed by the Spring IoC Container.
+		
+Spring Boot annotation	:
+		https://www.geeksforgeeks.org/spring-boot-annotations/
+		https://www.geeksforgeeks.org/top-spring-boot-annotations/?ref=asr2
+
+Spring Boot Starter : 
+		It is a pre-defined ready amde set of dependencies that simplifies building specific types of Spring applications.
+		These starters are designed to automatically include the libraries and configurations needed for particular features ,like web development
+		, database intraction, security, or testing , without requiring developers to manually manage the dependencies.
+		Spring Boot provides numerous built-in starters for common use cases:
+		
+		spring-boot-starter-web: Provides web functionalities for REST APIs using Spring MVC. Include everything needed to build a web application(
+		like Spring MVC , tomcat and jackson for json).
+		spring-boot-starter-data-jpa: Simplifies database interactions using JPA and Hibernate.
+		
+		These starters help developers quickly set up Spring Boot projects by reducing boilerplate configurations.
+
+		Spring Boot Starter Web	:	
+		It uses Spring MVC, REST, and Tomcat as a default embedded server. The single spring-boot-starter-web dependency can pull in all 
+		dependencies related to web development. It also reduces the count of build dependency. The spring-boot-starter-web mainly depends on the 
+		following:
+			org.springframework.boot:spring-boot-starter
+			org.springframework.boot:spring-boot-starter-tomcat
+			org.springframework.boot:spring-boot-starter-validation
+			com.fasterxml.jackson.core:jackson-databind
+			org.springframework:spring-web
+			org.springframework:spring-webmvc
+		The spring-boot-starter-web auto-configures the below things required for the web development:
+			Dispatcher Servlet
+			Error Page
+			Embedded servlet container
+			Web JARs for managing the static dependencies
+
+		Spring Boot Starter Tomcat	: Spring Boot Starter Tomcat is the default embedded container for Spring Boot Starter Web. 
+		the spring-boot-starter-tomcat has everything related to the Tomcat server. It has	:
+			core
+			el
+			logging
+			WebSocket
+
+Spring Boot Actuator	:	https://www.geeksforgeeks.org/spring-boot-actuator/?ref=lbp
+		Spring Boot provides an actuator dependency that can be used to monitor and manage your Spring Boot application,By /actuator and 
+		/actuator/health endpoints we can achieve the purpose of monitoring.
+		>With the help of Spring Boot, we can achieve the above objectives.
+		>Spring Boot’s ‘Actuator’ dependency is used to monitor and manage the Spring web application.
+		>We can use it to monitor and manage the application with the help of HTTP endpoints or with the JMX.
+
+
+// Using stream filter to find sum of a list
+import java.util.*;
+
+class Addition {
+	public static void main(String[] args)
+	{
+		// create a list of integers
+		List<Integer> list = new ArrayList<Integer>();
+
+		// add elements to the list
+		list.add(1);
+		list.add(5);
+		list.add(6);
+		list.add(7);
+		list.add(8);
+		list.add(9);
+		list.add(10);
+
+		System.out.println(sum(list));
+	}
+
+	public static int sum(List<Integer> list)
+	{
+		// create a stream of integers
+		// filter the stream
+		// add the integers
+		return list.stream()
+			.filter(i -> i > 5)
+			.mapToInt(i -> i)
+			.sum();
+	}
+}
+
+
+create database test;
+use test;
+create table emp (id int NOT null auto_increment, name varchar(255) NOT NULL, 
+address varchar(255), age int NOT NULL, primary key(id));
+
+select * from emp;
+
+create table employee (id int NOT null auto_increment, name varchar(255) NOT NULL,address varchar(255), age varchar(255) NOT NULL, primary key(id));
+INSERT INTO employee (name, address, age)VALUES ('ansh', 'mirzapur','5years');
+
+C:\CamelDataFolder\input
+
+C:\CamelDataFolder\output
+
+https://docs.redhat.com/en/documentation/red_hat_jboss_fuse_service_works/6.0/html/installation_guide/chap-installing_jboss_developer_studio#Install_JBoss_Developer_Studio
+
+curl -X POST http://localhost:8080/api/cognizanttest/data -H "Content-Type: application/json" -d '{"name":"John Doe", "age":30}'
+
+curl -X POST -H "Content-Type: application/json" -d '{"name": "vinod", "age": "33Years", "address": "Mirzapur"}' http://example.com/api/users

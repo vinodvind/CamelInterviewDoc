@@ -1,0 +1,14 @@
+SpringBootCamel: Java DSL
+
+>A Java DSL which is used to build Route instances in a CamelContext 
+>@Component : 
+>Difference b/w processing and transformation : after receiving a message doing some operation does not change body of message called processing and
+				if we are doing anything that change the body of message called transformation.
+>Doing Some processing using Processor (pre define Interface provide by apache camel)
+
+>Expose ENdpoint : https://stackoverflow.com/questions/62709069/rest-api-integration-using-apache-camel
+					https://blog.knoldus.com/apache-camel-and-rest-api/
+					https://dzone.com/articles/expose-rest-endpoints-with-apache-camel
+					
+underlying collection :
+The return type of a Lambda function (introduced in JDK 1.8) is a also functional interface					

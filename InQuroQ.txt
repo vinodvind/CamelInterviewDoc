@@ -1,0 +1,242 @@
+
+https://stackoverflow.com/questions/64379690/jboss-fuse-migration-from-6-3-to-fuse-7
+
+Q : Fuse container creation Installation and file configuration
+	/HomePath-fuseEsb/SCB/bin   
+	/HomePath-fuseEsb/SCB/etc    configuration both service and container
+	/HomePath-fuseEsb/SCB/data/log
+    Unzip zar  >change configuration in etc folder>
+	
+	>*maven.setting Xml
+	>*.url.mvn.cfg:'
+	>karaf.shell.cfg						sshport = 8101   updated ---> 8301
+	>karaf.management.cfg					rmiRegistryPort =1099   ---> updated  2199 ,rmiserverport =44444  ---> 564444
+	>pax.web.cfg                            service.http.port = 8181  ---> upadte 8384
+	>logging.cfg							log4j.appender.sift.DatePattern='.'yyyy-MM-dd
+	>user.properties						Change user and password.
+	
+	login : ssh admin@loacalhost -p8101
+  
+Q :Deplyemnt command fuse and bundle and log command 
+    >Manual and cloud-Naxus
+	Manual : 
+		We get Jar file in tmp folder and check port number i.e is used already for in another app or not if used then need to use another 
+		open port and login into container and use command to deploye jar and also install required dependency :
+		install file:/directoryName/jarfileName   to deploye jar.
+	
+	Cloud-Naxus : 
+		Step-1: mvn clean install          create jar into local path into server(target dir of bundle)
+		Step-2: mvn clean deploy           push the jar file into naxus repository.
+		Step-3: install -s mvn:in.goindigo.webservices/CloudCherryMail/1.0.2
+	
+	Install Dependency :
+		features:install camel-restlet
+
+3 : Amq default port  
+    Application based : 61616   Configure in activeMq          etc/activemq.xml
+    GUI based         : 8181    Configure in fuse container    pax.web.cfg  
+	service.http.port=8181  
+
+	java.naming.factory.initial=org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory
+	connectionFactory.myConnectionFactory=tcp://localhost:61616?minLargeMessageSize=250000	
+
+4 :change default fuse container
+   fuse container default port : karaf.shell.cfg
+   sshport=8101 
+   
+5 : diff rence b/w 6.2 and 7.3 fuse 
+	 1  >6 include AMQ broker but in 7.3 not
+	 2	>6 and 7.6 has not supported by redhat now but 7.10 is supoorted
+	 3	>we can create fabric of 6 but 7 run as standalone.
+
+6 : vernuvelity  :
+		It is securuty breach/concern which comes on server or container .
+		It is check by security team and if there any securuty breach/concern occuer,security team provide the case id and team log a ticket on 
+		redhat.Redhat provide solution .
+
+7 : all started bundle in container.
+    list |grep -i 'Active'  show all started bundle.
+	list | grep -i 'started'  show all spring started bundle.
+	list |grep -i 'Created'  all deployed bundle
+	[ 295] [Active     ] [Created     ] [       ] [   80] Indigo :: Bundle :: Camel OSGi Bundle for AimsGenericService (1.0.5)
+	3] [Active     ] [            ] [       ] [   50] camel-velocity (2.15.1.redhat-620133)
+	list ||grep - i 'started'
+	list | grep -i 'created'
+	list | grep -i 'active'
+	
+8 : PID how to grep all java process.
+    ps -elf |grep -i java
+	using top command.
+
+9 : system log and container log 
+    /var/log
+	/homepath/containername/data/log
+
+10 : load  balancer (ROund robin) Haproxy :
+	AProxy is High available Reverse Proxy or Load Balancer which allows you to route the HTTP request to the destined server with certain set of 
+	rules.
+     Access Control list(ACL) : we defined rules to route request to the desired back end. This rules are called as Access Control List or ACLs.
+	 >acl app1 path_beg -i /api/getEmployeeData        first we define alias of a application
+	 
+	 >use_backend srvs_app1       if app1         
+	 
+	 >backend srvs_app1
+     balance     roundrobin
+     server  fuse1 10.250.100.118:80 check inter 2000 rise 2 fall 5
+    
+	log file path : /var/log/haproxy. log 
+	cfg file	  : /etc/haproxy/haproxy.cfg 
+
+
+11 : How to define ACL(Access Control List)
+		>acl app1 path_beg -i /api/getEmployeeData
+		
+12 : permission change :
+	sudo chmod -R 777 path/filename
+
+13 :High memory consuption 
+	1 : we can check by using top command that is which container used more CPU. Due to high CPU consumption container is going to hang stat.
+		it occuer due to any bundle is in hang state. we can check this buy checking bundle state i.e stopping state.and we can also check log 
+		particular log file of budle , if size increasing rapidaily means this bundle is in hang.
+	2 : if there is any container 
+
+14 :How to check all route of a bundle
+	list -l   run this command in container to check from which dircotory/path bundle deplyoed.
+	route-stop routeID
+
+15 : all listing port
+		netstat -tulnp |grep -i PID
+		netstat -tulnp port
+		netstat -tulnp
+
+16 : 
+
+17 : 
+
+::::::
+what is component and what is component: 
+
+1 : File component : If you want to delete the file after processing, the route should be:
+						file://inbox?delete=true"
+				 If you want only to consume files when a done file exists, then you can use the doneFileName option on the endpoint.
+						file:bar?doneFileName=done
+				 READ FROM A DIRECTORY AND WRITE TO ANOTHER DIRECTORY
+					from("file://inputdir/?delete=true").to("file://outputdir")	
+					
+				from("file://inputdir/?recursive=true&delete=true").to("file://outputdir")
+				
+				noop=true  : If true, the file is not moved or deleted in any way. This option is good for readonly data, by default false.
+	
+				Camel will set idempotent=true as well, to avoid consuming the same files over and over again.
+
+2 : Qurtz  :The Quartz component provides a scheduled delivery of messages
+				quartz://timerName?options
+				quartz://timerName?cron=expression
+				
+				from("quartz://myGroup/myTimerName?cron=0+0/5+12-18+?+*+MON-FRI")
+				.to("activemq:Totally.Rocks");
+
+ HashMap list :
+
+
+AMQ component : 
+
+		<bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+			<property name="brokerURL" value="tcp://localhost:61616" />
+		</bean>
+	
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-activemq</artifactId>
+			<version>x.x.x</version>
+			<!-- use the same version as your Camel core version -->
+		</dependency>
+
+		activemq:[queue:|topic:]destinationName[?options]
+
+producer EXample : 
+		from("timer:mytimer?period=5000")
+				.setBody(constant("HELLO from Camel!"))
+				.to("activemq:queue:HELLO.WORLD");
+				
+				<from uri="timer://myTimer?fixedRate=true&amp;period=2000" />
+				<to uri="activemq:queue:LOG.ME" />
+		
+CONSUMER EXAMPLE : 
+		from("activemq:queue:HELLO.WORLD")
+				.log("Received a message - ${body}");
+			
+			<from uri="activemq:queue:LOG.ME" />
+			<to uri="log:ExampleActiveMQRouterBlueprint" />
+
+
+and also did proactive monitoring of critical applications .
+ 
+in proactive monitoring  we create alert for applications and fuse containers
+
+
+***************Feature(XML file install ) :************************************
+https://access.redhat.com/documentation/en-us/red_hat_jboss_fuse/7.0-tp/html/deploying_into_apache_karaf/deployfeatures#DeployFeatures-Create-AddFeature
+A feature is created by adding a new feature element to a special kind of XML file, known as a feature repository.
+    1> Create a custom feature repository
+		Create feature repository on your file system—for example,C:\Projects\features.xml
+			
+			<?xml version="1.0" encoding="UTF-8"?>
+				<features name="CustomRepository">
+			</features>
+	
+	2> Add a feature to the custom feature repository
+			<?xml version="1.0" encoding="UTF-8"?>
+			<features name="MyFeaturesRepo">
+				<feature name="example-camel-bundle">
+					<bundle>file:C:/Projects/camel-bundle/target/camel-bundle-1.0-SNAPSHOT.jar</bundle>
+				</feature>
+			</features>
+			
+		now run features:install example-camel-bundle  command to install feature or
+		now to check whether the features service successfully parses the new feature entry,
+			JBossFuse:karaf@root> features:refreshUrl
+			JBossFuse:karaf@root> features:list
+			...
+			[uninstalled] [0.0.0                 ] example-camel-bundle                 MyFeaturesRepo
+			...  OR
+			JBossFuse:karaf@root> features:list | grep example-camel-bundle
+			[uninstalled] [0.0.0                 ] example-camel-bundle                 MyFeaturesRepo
+
+	3> Add the local repository URL to the features service  :
+		features:addUrl file:C:/Projects/features.xml
+		check that the repository’s URL is registered correctly :
+		JBossFuse:karaf@root> features:listUrl
+			file:C:/Projects/features.xml
+			mvn:org.apache.ode/ode-jbi-karaf/1.3.3-fuse-01-00/xml/features
+			mvn:org.apache.felix.karaf/apache-felix-karaf/1.2.0-fuse-01-00/xml/features
+ 
+	4> Add dependent features to the feature : 
+	If your feature depends on other features, you can specify these dependencies by adding feature elements as children of the original feature
+	element. For example, you can define the example-camel-bundle feature with Apache Camel dependencies as follows:
+		<?xml version="1.0" encoding="UTF-8"?>
+		<features name="MyFeaturesRepo">
+		  <feature name="example-camel-bundle">
+			<bundle>file:C:/Projects/camel-bundle/target/camel-bundle-1.0-SNAPSHOT.jar</bundle>
+			<feature version="7.0.0.fuse-000163-redhat-2">camel-core</feature>
+			<feature version="7.0.0.fuse-000163-redhat-2">camel-spring-osgi</feature>
+		  </feature>
+		</features>
+	5> Add OSGi configurations to the feature
+	
+	
+	
+
+Hi My name is vinod kumar and i worked as developer and support both and working for a aviation company/client, where we worked as the support roll
+from last 1.5 years to 2 years.before this  i did the some developent
+where we created rest api's and also did file based project.
+besically in support roll, we worked on INC and resolve the issue based on p1 ,p2,p3 issue and  monitoring the applications which was deployed in 
+the fuse containers on prod servers, check and maintainhealth of all fuse containers , we also manage the log on the servers ,and support AMQ broker
+where was bassically monitor queue Payment applications
+	.	
+
+My name is vinod kumar and currently worked for a aviavition domain where we basically worked for as a integration deve and worked in support role
+We created rest api where we take input request in json format and produce response as per user requirement .We do the file based processing where 
+pick file from ftp/file location and put into destination endpoint. Aslo consume soap service .
+In support role , we worked on INC based priority p1 p2 p3. 
+	

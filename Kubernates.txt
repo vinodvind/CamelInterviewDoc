@@ -1,0 +1,130 @@
+https://www.geeksforgeeks.org/courses/AWS-solutions-architect-certification-training-program-live
+
+A microservice-based application might require several services to interact with each other to complete a business scope. The coordination of these
+interactions is known as a workflow or a saga. There are two models for implementing a workflow: choreography and orchestration. With choreography, 
+you let each part of the system inform the other of its job and let it work out the details, while with orchestration, you rely on a central
+brain to guide and drive the execution processes.(https://orkes.io/blog/why-is-microservice-orchestration-important-now/)
+
+Orchestration	:	it coordinates multiple microservices to achieve a common goal using a central platform like Kubernetes.
+		Kubernetes is a tool for managing containerized applications, defining rules for interaction, deployment, scaling, and monitoring.
+		
+		Etsy.com uses Kubernetes to orchestrate its complex architecture of hundreds of microservices for its e-commerce platform.		
+		Kubernetes enables Etsy to spin up new instances, scale based on demand, and roll out updates without disruption, ensuring a seamless
+		experience for customers and scalability for the platform.
+
+
+
+https://www.geeksforgeeks.org/introduction-to-kubernetes-k8s/?ref=lbp
+Kubernetes :	It is an open-source container orchestration platform that helps us to run and manage applications/microservices in containers,
+			automates the deployment, and scaling of container-based applications
+		
+		It was developed by Google Lab in 2014, and it is also known as k8s.
+		
+		It is an open-source container orchestration platform that automates the deployment, management, and scaling of container-based applications
+		in different kinds of environments like physical, virtual, and cloud-native computing foundations.
+
+		Containers are isolated from each other so that multiple containers can run on the same machine without interrupting anyone else. It allows
+		us to deploy and manage container-based applications across a Kubernetes cluster of machines.
+
+here are several reasons to learn Kubernetes like easy scaling of applications, self-healing, portability, and automation. It is very helpful for
+running microservices and distributed systems.
+ 
+Benefits of Using Kubernetes : 
+			Automated deployment and management
+			Scalability
+			High availability
+			Cost-effectiveness
+			Improved developer productivity
+Use cases of Kubernetes in real-world scenarios	:	
+			E-commerce:
+			Media and entertainment:
+			Financial services:
+			Healthcare: 
+Architecture of Kubernetes :	
+			Kubernetes follows the client-server architecture where we have the master installed on one machine and the node on separate Linux
+			machines. It follows the master-slave model, which uses a master to manage Docker containers across multiple Kubernetes nodes. A master
+			and its controlled nodes(worker nodes) constitute a “Kubernetes cluster”. A developer can deploy an application in the docker containers
+			with the assistance of the Kubernetes master.
+Key components of Kubernetes :	
+			Kubernetes- Master Node Components	:	Kubernetes master is responsible for managing the entire cluster, coordinates all activities
+				inside the cluster, and communicates with the worker nodes to keep the Kubernetes and your application running. This is the entry
+				point of all administrative tasks. When we install Kubernetes on our system we have four primary components of Kubernetes Master 
+				that will get installed. The components of the Kubernetes Master node are: 
+					API Server 		:	
+					Scheduler		:	
+					Controller Manager:	
+					etc				:	
+			
+			Kubernetes- Worker Node Components	:	Kubernetes Worker node contains all the necessary services to manage the networking between the 
+				containers, communicate with the master node, and assign resources to the containers scheduled. The components of the Kubernetes 
+				Worker node are:
+					Kubelet	:	
+					Kube-Proxy:
+					Pods	:
+					Docker	:
+					
+					1208160074002490
+					
+					
+Docker : It is a open source plateform designed to automate the deployment , scalling and management of applications by packaeging them into 
+		containers.Containers allow developers to bundle an application along with it's depenendcies(such as libraries, configuration files, and
+		environment variables) into a single, standardized unit that can run consistently across various environments, from developement to
+		production.
+		
+		Key Concepts : 
+		1: container : A lightweight , standalone and executable package that include everything needed to run an application, such
+		as code, runtime , libraries and systemtools.Containers are isolated from each other and the host system, making them portable and scalable
+		accross diff environment.
+		
+		2 :Image : A dcoker image is a read only template used to create containers.It contains the applications and it's depenendcies.image can be
+		 stored public or private repositories(Docker hub) and reused across diff systes.
+		 
+		3: Dockerfile : a text files that contains a set of instructions to build a docker image.it specifies the base image, application code,
+		depenendcies andncommand to be executed inside the container.
+		
+		4 : Docker Engine : It is responsible to builing, running and managing containers.
+		
+		5 :Docker hub : A cloud base repository where Docker users can share , store and access images.include both private and public repositories.
+		6 : valumes : Machanism that allows Docker container to persist data outside the container.
+		
+Create a container : 1 : instal docker
+		2 : Have a docker image
+			Pull a image locally : 
+			docker pull ngnix (image download from docker hub)
+		3 : varify download image :
+			docker image
+		4 : Create and Run a container from the Image :
+			docker run --name my-custome-container-name -d -p 8080:80 nginx
+			OR docker run --name firstNgnixContainer -d -p 8080:80 nginx
+				docker run 				   : creates and starts a container from Docker image.
+				--name firstNgnixContainer : assign a custom name "firstNgnixContainer" to the container.
+				-d : Runs the container in detatched mode(in back ground )
+				-p 8080:80 : Maps port on your host machine to port 80 on the container
+				nginx      : image name
+				Now ngnix web server run at http://localhost:8080
+		5 : varify the container is Running :
+			docker ps
+		6 : show all containers (running and stoped containers) :
+			docker ps -a.
+		containerID IMAGE COMMAND created STATUS PORTS NAME (SHOWING THIS variables)
+		7 : intracting with the container :
+			once the container is running , we can intract with it.
+			Access container shell : 
+				enter running container's shell:
+					docker exec -it firstNgnixContainer /bin/bash
+		8 : Containers logs : 
+			docker logs firstNgnixContainer
+		9 : Imp command : 
+			docker stop firstNgnixContainer
+			docker start firstNgnixContainer
+			
+			Remove container :
+			docker stop firstNgnixContainer
+			docker rm firstNgnixContainer
+	Valume mounting : 
+		docker run -v /host/path:/container/path -d nginx
+			
+				
+			
+			
+			

@@ -1,0 +1,71 @@
+1 : SITA-Acars	:
+		Project Overview: This is critical project because of this application process critical flight operation data as whether message/report and 
+		flight related information which is needed to pilot at the time of takeoff. I integrated diff-diff system like File, ActiveMQ and FTP to 
+		processed message from source endpoint to destination endpoint. 
+
+Workflow: 
+		Two bundle/Jar deployed to process files, both bundles deployed on same JBoss Fuse Container.
+		First Bundle: 
+				Take files from given FTP source, we create FTP source Endpoint as ftp://FTPservrIP:22/Folder?option using CAMEL FTP component
+				for consuming Files.
+	     		As per required put it into Local dir., create file endpoint by using Camel FILE component and also push message in a queue using Camel
+				ActiveMQ Component for further process.
+				FTP destination Endpoint:  file:///LocalDIR?option
+				Queue destination Endpoint: Activemq:queue:QueueName?option
+				Now Use recipientList Camel EIP (Enterprise integration pattern) to send message to diff-diff system like file endpoint and ActiveMQ
+				endpoint to route same message to these endpoints define in CFG file dynamically.
+		
+				<recipientList parallelProcessing="true">
+				<constant>{{Local path and ActiveMQ queue name define in CFG configuration file }}</constant>
+				</recipientList>		
+				parallelProcessing option use to send same message to numbers of endpoint at the same time.	
+
+		Second Bundle:	
+				Second bundle Pic files from Local dir file:///LocalDIR?option and call a bean to process and validate message body according given
+				condition and then put these message/file to another ftp endpoint destination for further used (another application consume these
+				files from this destination).
+			All source and destination path define in CFG configuration file.
+			Used logging Level (DEBUG, INFO, ERROR) for log.
+		
+Technologies :
+		Camel Component: File, ActiveMQ, Ftp
+		EIP:  To, recipient List, log  
+		Maven Dependency: Camel-core, camel-ftp, camel-activemq,
+		Deployment Environment: Red Hat JBoss Fuse Container
+		Server Environment: Linux (VM)
+		Messaging system:  Apache ActiveMQ
+
+		
+2 : LnT	:
+	Project Overview : 
+	
+	
+Version
+Project Interview , xsd , Lnt 
+Parentpom
+deployment process
+InteliaID
+Kubernative setting	
+	
+
+<xs:restriction base="xs:string">    
+					      			<xs:pattern value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"/>  
+					      		</xs:restriction>
+								
+								value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+								
+								com.sun.org.apache.xerces.internal.jaxp.validation.SimpleXMLSchema@69a1d7fa
+								
+								
+								
+								<error>Validation failed for: com.sun.org.apache.xerces.internal.jaxp.validation.SimpleXMLSchema@69a1d7fa
+errors: [
+org.xml.sax.SAXParseException: cvc-datatype-valid.1.2.1: '5vind' is not a valid value for 'integer'., Line : 1, Column : 75
+org.xml.sax.SAXParseException: cvc-type.3.1.3: The value '5vind' of element 'bagcount' is not valid., Line : 1, Column : 75
+]. Exchange[26339B013430EBC-0000000000000004]</error>
+
+								<error>Validation failed for: com.sun.org.apache.xerces.internal.jaxp.validation.SimpleXMLSchema@69a1d7fa
+errors: [
+org.xml.sax.SAXParseException: cvc-pattern-valid: Value 'vindgmail.com' is not facet-valid with respect to pattern '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}' for type '#AnonType_EmailTypeStudentnote'., Line : 1, Column : 107
+org.xml.sax.SAXParseException: cvc-type.3.1.3: The value 'vindgmail.com' of element 'EmailType' is not valid., Line : 1, Column : 107
+]. Exchange[26339B013430EBC-0000000000000006]</error>

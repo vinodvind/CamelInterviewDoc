@@ -1,0 +1,265 @@
+JOB in COgnizant 21 OCt 2024 : 
+	SO ID - 6124768
+	Technical Skills:KafkaApache CamelJava
+	Sharath.ShankaraSastry@cognizant.com
+
+COgnizant project : 
+Bassically i have done a POC and an assignment 3 months . this is a ING bank assignment . basically i have worked a running code where need 
+to implement onException cluse instead of errorHandler.in code errorHandler was implemented. XLST and XSD is used in project .Where need to implemented
+onException cluse for specific exception for XSD(SchemaValidationException) and XLST .
+XXSD :.to("validator:com/example/schema")
+	   SchemaValidationException :(when XML validation against XSD schema failed in camel route)
+	   org.xml.sax.SAXParseException   (WHen there is an issue parsing the XML document against the XSD )
+	   ScemeFactoryConfigurationError (issue with configuration of the schema factory such as incoorrect schema setuup, problem in loading the XSD)
+
+XLST : .to(xslt:com/example/transform.xslt)
+	onException(XlstBuilderException.class)   Xlst transformation failed(when there is an issue with processing XLST transformations in apache camel)
+		
+	Javax.xml.transform.TransformerConfigurationException : If the XLST file or configuration is invalid, this exception may be thrown by the
+	trnasfermer itself, indicationg issue with the setup of the XSLT processor.
+	
+	OR onException(TransformerConfigurationException.class) :XLST processing error.
+	
+	FailedTocreateRouteException
+	javax.xml.transform.TransformerException
+	org.xml.sax.SAXParseException (incorrect xlst file)
+
+
+>use OnException
+>Handled invalid input request(JsonParseException)
+>Handled Direct Consumer Not Available Exception (DirectConsumerNotAvailableException)
+> Take custom exception message from properties file (Application.properties)
+>Exception response message in JSON
+
+http://localhost:8082/api/v1/customer/xml
+ 
+{
+    "Request": {
+        "Postcode": {
+            "prefix": "ns",
+            "text": "12345"
+        },
+        "Street": {
+            "prefix": "ns",
+            "text": "RICHMOND ROAD"
+        },
+        "Area": {
+            "prefix": "ns",
+            "text": "MG Road"
+        },
+        "City": {
+            "prefix": "ns",
+            "text": "Bangalore"
+        },
+        "ContactNumber": {
+            "prefix": "ns",
+            "text": "94234923847"
+        },
+        "StartDate": {
+            "prefix": "ns",
+            "text": "12-10-2013"
+        }
+    }
+}
+
+{
+  "code": 1000,
+  "message": "Validation Exception",
+  "description": "Input request is invalid.",
+  "details": "Detailed error to be printed.",
+  "http_response": {
+     "message": "Missing Arguments.",
+      "code": 419
+   }
+}
+ 
+
+1 : How many API you developed?
+	a : croew roster json and xml :
+	b : SIta and joc
+	c : SKY Bridge
+	d : 
+	
+	
+2 : What is camel , What is integration	and why we use camel for integration.
+3 : support role
+
+4 : path parameter and query parameter
+
+
+
+
+adivasi hair :
+8088044886
+8197073771
+
+credit card : 
+0002 cuurent limit : 29515.84     8 Sept 2024
+due for 8 sept 2024 : 3352.58
+
+
+
+*********
+
+>http://localhost:8080/employees
+
+>curl http://localhost:8080/getEemployeeDetails -H "Accept: application/json"
+
+> curl -X POST -H "Content-Type: application/json" -H "Accept: application/json" -d "{"name": "abe","address": "Soap","age":"33"}" http://localhost:8080/insertEemployeeData
+OR
+> curl -X POST -H "Content-Type: application/json" -H "Accept: application/json" -d "{\"name\": \"abe\",\"address\": \"Soap\",\"age\":\"33\"}" http://localhost:8082/insertEemployeeData
+
+>java.sql.SQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times
+
+
+canonical format : Using camel, no need to convert data in to canonical format to integrate any kind of system(a simple data type to communicate
+					diff diff system.  
+
+1 : 
+Throttler and Loadbalancer EIP Pattern
+
+2 : Camel cxf : Soap and wsdl
+Camel Component : 
+	1. Contract-first approach 
+	2. Code-first approach
+
+2 : 
+Miscellaneous – Circuit Breaker
+Circuit Breaker with Resilience4j:
+
+***********
+>What is circuite breaker ,what is purpose 
+
+Maven dependency:
+<dependency> 
+   <groupId>org.apache.camel</groupId> 
+   <artifactId>camel-resilience4j</artifactId>     
+   <version>x.x.x</version><!-- use same version as your Camel core version --> </dependency>
+<dependency>
+   <groupId>org.apache.camel.springboot</groupId>
+   <artifactId>camel-resilience4j-starter</artifactId>
+   <version>x.x.x</version>
+</dependency>
+
+
+AcitveMq : 
+		.\bin\client.bat "activemq:producer --user Username --password Password"
+		https://docs.redhat.com/en/documentation/red_hat_jboss_fuse/6.3/html/apache_camel_component_reference/idu-activemq#IDU-ActiveMQ
+		
+		./bin/client "activemq:producer --user admin --password admin"
+  
+  <dependency>
+    <groupId>org.apache.camel.springboot</groupId>
+    <artifactId>camel-activemq-starter</artifactId>
+    <version>3.8.0</version>
+  </dependency>
+
+
+Hi Deva
+
+I have completed 5 training video and done POC using camel component like timer, file, direct, JMS and ActiveMq,
+SQL and JDBC .
+I will further updte you when i will complete all video.
+Use EIP and predicate like when.
+For POC i am usning components, EIP and predicate .Find details below :
+Component	: Direct, File, Timer, ActiveMQ, JMS, MySQL,
+EIP			: From,To
+Predicate 	: Choice, When ,
+Exceptionn	: onException, errorHandler.
+
+
+
+I will updte you when i will complete all video.
+ 
+on local machine what learn from video .
+
+
+I have completed 5 training video and done POC using camel component like timer, file, direct, JMS ,ActiveMq, Sql ,JDBC.
+I will further updte you when i will complete all video.
+
+*******************
+Request Summary
+I need to add extension Google Rest Web service client for Chrome 1.0 for internal testing/learning.
+
+For internal testing and learning.
+
+Google Rest Web service client for Chrome 1.0
+
+e CS approval
+
+
+RITM3092186
+
+Request Number : REQ2863382
+
+http://localhost:8084/api/example/jsontoxml
+{
+"name":"vinod",
+"age":33
+}
+
+https://support.postman.com/hc/en-us/articles/4412971069847-Unable-to-load-data
+https://support.postman.com/hc/en-us/articles/4410785125271-How-to-remove-local-data
+
+Try using a different network. If you can use the Postman application, a VPN or proxy is likely installed on your computer and prevents the 
+connection to Postman services. Contact your IT team and ask them to whitelist the domains on your network firewall to allow WebSocket 
+connections for Postman.
+
+********************
+package com.example.CamelBindyCSV.JsonToCSVRoute;
+
+import java.io.Serializable;
+
+import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
+import org.apache.camel.dataformat.bindy.annotation.DataField;
+
+@CsvRecord(separator=",", generateHeaderColumns = true)
+/*
+ * @CsvRecord: This annotation marks the class as a CSV record and allows
+ * customization of CSV-specific properties. In this case, separator = ","
+ * specifies that the CSV fields are separated by commas, and
+ * generateHeaderColumns = true indicates that the header line should be
+ * generated in the CSV file.
+ */
+public class User implements Serializable{
+
+	@Override
+	  public String toString() {
+	    return "User [name=" + name + ", surname=" + surname + ", id=" + id + "]";
+	  }
+	
+	 @DataField(pos = 1)
+	  private String name;
+	  @DataField(pos = 2)
+	  private String surname;
+	  private String id;
+	  
+		/*
+		 * @DataField: This annotation marks the fields that need to be mapped to CSV
+		 * columns. The pos attribute specifies the position of the field in the CSV
+		 * record. In this case, name corresponds to the first field (position 1), and
+		 * surname corresponds to the second field (position 2).
+		 */
+	
+	  public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getSurname() {
+		return surname;
+	}
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	  
+	  
+	
+}
